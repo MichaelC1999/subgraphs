@@ -38,6 +38,7 @@ export function getUsdPricePerToken(tokenAddr: Address): CustomPriceType {
   }
 
   // 3. CalculationsCurve
+<<<<<<< HEAD
   let calculationsCurvePrice = getTokenPriceFromCalculationCurve(
     tokenAddr,
     network
@@ -48,11 +49,19 @@ export function getUsdPricePerToken(tokenAddr: Address): CustomPriceType {
       calculationsCurvePrice.usdPrice
         .div(calculationsCurvePrice.decimalsBaseTen)
         .toString(),
+=======
+  let calculationsCurvePrice = getTokenPriceFromCalculationCurve(tokenAddr, network);
+  if (!calculationsCurvePrice.reverted) {
+    log.info("[CalculationsCurve] tokenAddress: {}, Price: {}", [
+      tokenAddr.toHexString(),
+      calculationsCurvePrice.usdPrice.div(calculationsCurvePrice.decimalsBaseTen).toString(),
+>>>>>>> b5219fd (Squashed All)
     ]);
     return calculationsCurvePrice;
   }
 
   // 4. CalculationsSushiSwap
+<<<<<<< HEAD
   let calculationsSushiSwapPrice = getTokenPriceFromSushiSwap(
     tokenAddr,
     network
@@ -63,6 +72,13 @@ export function getUsdPricePerToken(tokenAddr: Address): CustomPriceType {
       calculationsSushiSwapPrice.usdPrice
         .div(calculationsSushiSwapPrice.decimalsBaseTen)
         .toString(),
+=======
+  let calculationsSushiSwapPrice = getTokenPriceFromSushiSwap(tokenAddr, network);
+  if (!calculationsSushiSwapPrice.reverted) {
+    log.info("[CalculationsSushiSwap] tokenAddress: {}, Price: {}", [
+      tokenAddr.toHexString(),
+      calculationsSushiSwapPrice.usdPrice.div(calculationsSushiSwapPrice.decimalsBaseTen).toString(),
+>>>>>>> b5219fd (Squashed All)
     ]);
     return calculationsSushiSwapPrice;
   }
@@ -97,17 +113,25 @@ export function getUsdPricePerToken(tokenAddr: Address): CustomPriceType {
     return sushiswapPrice;
   }
 
+<<<<<<< HEAD
   log.warning("[Oracle] Failed to Fetch Price, tokenAddr: {}", [
     tokenAddr.toHexString(),
   ]);
+=======
+  log.warning("[Oracle] Failed to Fetch Price, tokenAddr: {}", [tokenAddr.toHexString()]);
+>>>>>>> b5219fd (Squashed All)
 
   return new CustomPriceType();
 }
 
+<<<<<<< HEAD
 export function getUsdPrice(
   tokenAddr: Address,
   amount: BigDecimal
 ): BigDecimal {
+=======
+export function getUsdPrice(tokenAddr: Address, amount: BigDecimal): BigDecimal {
+>>>>>>> b5219fd (Squashed All)
   let tokenPrice = getUsdPricePerToken(tokenAddr);
 
   if (!tokenPrice.reverted) {

@@ -90,6 +90,7 @@ export function createLiquidityPool(
   let poolAmounts = new _LiquidityPoolAmount(poolAddress);
 
   pool.protocol = protocol.id;
+<<<<<<< HEAD
   pool.name = protocol.name + " " + LPtoken.symbol;
   pool.symbol = LPtoken.symbol;
   pool.inputTokens = [token0.id, token1.id];
@@ -102,11 +103,25 @@ export function createLiquidityPool(
   pool.cumulativeSupplySideRevenueUSD = BIGDECIMAL_ZERO;
   pool.cumulativeProtocolSideRevenueUSD = BIGDECIMAL_ZERO;
   pool.cumulativeTotalRevenueUSD = BIGDECIMAL_ZERO;
+=======
+  pool.inputTokens = [token0.id, token1.id];
+  pool.outputToken = LPtoken.id;
+  pool.totalValueLockedUSD = BIGDECIMAL_ZERO;
+>>>>>>> b5219fd (Squashed All)
   pool.cumulativeVolumeUSD = BIGDECIMAL_ZERO;
   pool.inputTokenBalances = [BIGINT_ZERO, BIGINT_ZERO];
   pool.inputTokenWeights = [BIGDECIMAL_FIFTY_PERCENT, BIGDECIMAL_FIFTY_PERCENT];
   pool.outputTokenSupply = BIGINT_ZERO;
   pool.outputTokenPriceUSD = BIGDECIMAL_ZERO;
+<<<<<<< HEAD
+=======
+  pool.fees = createPoolFees(poolAddress);
+  pool.isSingleSided = false;
+  pool.createdTimestamp = event.block.timestamp;
+  pool.createdBlockNumber = event.block.number;
+  pool.name = protocol.name + " " + LPtoken.symbol;
+  pool.symbol = LPtoken.symbol;
+>>>>>>> b5219fd (Squashed All)
 
   poolAmounts.inputTokens = [token0.id, token1.id];
   poolAmounts.inputTokenBalances = [BIGDECIMAL_ZERO, BIGDECIMAL_ZERO];

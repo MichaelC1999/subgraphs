@@ -247,12 +247,15 @@ export function handleLiquidation(event: LogRepay): void {
   ).id;
   liquidateEvent.save();
 
+<<<<<<< HEAD
   usageHourlySnapshot.hourlyLiquidateCount += 1;
   usageHourlySnapshot.save();
 
   usageDailySnapshot.dailyLiquidateCount += 1;
   usageDailySnapshot.save();
 
+=======
+>>>>>>> b5219fd (Squashed All)
   let liqudidatedAccount = getOrCreateAccount(liquidateEvent.liquidatee);
   liqudidatedAccount.liquidateCount = liqudidatedAccount.liquidateCount + 1;
   liqudidatedAccount.save();
@@ -263,6 +266,15 @@ export function handleLiquidation(event: LogRepay): void {
   liquidatorAccount.save();
   addAccountToProtocol(EventType.LIQUIDATOR, liquidatorAccount, event);
 
+<<<<<<< HEAD
+=======
+  usageHourlySnapshot.hourlyLiquidateCount += 1;
+  usageHourlySnapshot.save();
+
+  usageDailySnapshot.dailyLiquidateCount += 1;
+  usageDailySnapshot.save();
+
+>>>>>>> b5219fd (Squashed All)
   marketHourlySnapshot.hourlyLiquidateUSD = marketHourlySnapshot.hourlyLiquidateUSD.plus(collateralAmountUSD);
   marketDailySnapshot.dailyLiquidateUSD = marketDailySnapshot.dailyLiquidateUSD.plus(collateralAmountUSD);
   financialsDailySnapshot.dailyLiquidateUSD = financialsDailySnapshot.dailyLiquidateUSD.plus(collateralAmountUSD);

@@ -1,4 +1,14 @@
+<<<<<<< HEAD
 import { Bytes, BigInt, ethereum, log } from "@graphprotocol/graph-ts";
+=======
+import {
+  BigDecimal,
+  Bytes,
+  BigInt,
+  ethereum,
+  log,
+} from "@graphprotocol/graph-ts";
+>>>>>>> b5219fd (Squashed All)
 
 import { ERC20, Transfer } from "../../generated/templates/StandardToken/ERC20";
 import { Burn } from "../../generated/templates/BurnableToken/Burnable";
@@ -17,9 +27,18 @@ import {
   GENESIS_ADDRESS,
   BIGINT_ZERO,
   BIGINT_ONE,
+<<<<<<< HEAD
   DEFAULT_DECIMALS,
 } from "../common/constants";
 
+=======
+  BIGINT_TWO,
+  BIGDECIMAL_ZERO,
+  DEFAULT_DECIMALS,
+} from "../common/constants";
+
+import { toDecimal } from "./registry";
+>>>>>>> b5219fd (Squashed All)
 import {
   getOrCreateAccount,
   getOrCreateAccountBalance,
@@ -44,13 +63,21 @@ export function handleTransfer(event: Transfer): void {
       token.decimals = tokenDecimals.reverted
         ? DEFAULT_DECIMALS
         : tokenDecimals.value;
+<<<<<<< HEAD
       token.totalSupply = BIGINT_ZERO;
+=======
+      token.totalSupply = BIGDECIMAL_ZERO;
+>>>>>>> b5219fd (Squashed All)
     }
 
     if (event.params.value == BIGINT_ZERO) {
       return;
     }
+<<<<<<< HEAD
     let amount = event.params.value;
+=======
+    let amount = toDecimal(event.params.value, token.decimals);
+>>>>>>> b5219fd (Squashed All)
 
     let isBurn = event.params.to.toHex() == GENESIS_ADDRESS;
     let isMint = event.params.from.toHex() == GENESIS_ADDRESS;
@@ -123,7 +150,11 @@ export function handleBurn(event: Burn): void {
   let token = Token.load(event.address.toHex());
 
   if (token != null) {
+<<<<<<< HEAD
     let amount = event.params.value;
+=======
+    let amount = toDecimal(event.params.value, token.decimals);
+>>>>>>> b5219fd (Squashed All)
 
     let isEventProcessed = handleBurnEvent(
       token,
@@ -158,8 +189,12 @@ export function handleMint(event: Mint): void {
   let token = Token.load(event.address.toHex());
 
   if (token != null) {
+<<<<<<< HEAD
     let amount = event.params.amount;
 
+=======
+    let amount = toDecimal(event.params.amount, token.decimals);
+>>>>>>> b5219fd (Squashed All)
     let isEventProcessed = handleMintEvent(
       token,
       amount,
@@ -191,7 +226,11 @@ export function handleMint(event: Mint): void {
 
 function handleBurnEvent(
   token: Token | null,
+<<<<<<< HEAD
   amount: BigInt,
+=======
+  amount: BigDecimal,
+>>>>>>> b5219fd (Squashed All)
   burner: Bytes,
   event: ethereum.Event
 ): boolean {
@@ -200,7 +239,11 @@ function handleBurnEvent(
     let totalSupply = ERC20.bind(event.address).try_totalSupply();
     let currentTotalSupply = totalSupply.reverted
       ? token.totalSupply
+<<<<<<< HEAD
       : totalSupply.value;
+=======
+      : toDecimal(totalSupply.value, token.decimals);
+>>>>>>> b5219fd (Squashed All)
     //If the totalSupply from contract call equals with the totalSupply stored in token entity, it means the burn event was process before.
     //It happens when the transfer function which transfers to GENESIS_ADDRESS emits both transfer event and burn event.
     if (currentTotalSupply == token.totalSupply) {
@@ -222,8 +265,14 @@ function handleBurnEvent(
     hourlySnapshot.hourlyTotalSupply = token.totalSupply;
     hourlySnapshot.hourlyEventCount += 1;
     hourlySnapshot.hourlyBurnCount += 1;
+<<<<<<< HEAD
     hourlySnapshot.hourlyBurnAmount =
       hourlySnapshot.hourlyBurnAmount.plus(amount);
+=======
+    hourlySnapshot.hourlyBurnAmount = hourlySnapshot.hourlyBurnAmount.plus(
+      amount
+    );
+>>>>>>> b5219fd (Squashed All)
     hourlySnapshot.blockNumber = event.block.number;
     hourlySnapshot.timestamp = event.block.timestamp;
 
@@ -236,7 +285,11 @@ function handleBurnEvent(
 
 function handleMintEvent(
   token: Token | null,
+<<<<<<< HEAD
   amount: BigInt,
+=======
+  amount: BigDecimal,
+>>>>>>> b5219fd (Squashed All)
   destination: Bytes,
   event: ethereum.Event
 ): boolean {
@@ -245,7 +298,11 @@ function handleMintEvent(
     let totalSupply = ERC20.bind(event.address).try_totalSupply();
     let currentTotalSupply = totalSupply.reverted
       ? token.totalSupply
+<<<<<<< HEAD
       : totalSupply.value;
+=======
+      : toDecimal(totalSupply.value, token.decimals);
+>>>>>>> b5219fd (Squashed All)
     //If the totalSupply from contract call equals with the totalSupply stored in token entity, it means the mint event was process before.
     //It happens when the transfer function which transfers from GENESIS_ADDRESS emits both transfer event and mint event.
     if (currentTotalSupply == token.totalSupply) {
@@ -268,8 +325,14 @@ function handleMintEvent(
     hourlySnapshot.hourlyTotalSupply = token.totalSupply;
     hourlySnapshot.hourlyEventCount += 1;
     hourlySnapshot.hourlyMintCount += 1;
+<<<<<<< HEAD
     hourlySnapshot.hourlyMintAmount =
       hourlySnapshot.hourlyMintAmount.plus(amount);
+=======
+    hourlySnapshot.hourlyMintAmount = hourlySnapshot.hourlyMintAmount.plus(
+      amount
+    );
+>>>>>>> b5219fd (Squashed All)
     hourlySnapshot.blockNumber = event.block.number;
     hourlySnapshot.timestamp = event.block.timestamp;
 
@@ -282,7 +345,11 @@ function handleMintEvent(
 
 function handleTransferEvent(
   token: Token | null,
+<<<<<<< HEAD
   amount: BigInt,
+=======
+  amount: BigDecimal,
+>>>>>>> b5219fd (Squashed All)
   source: Bytes,
   destination: Bytes,
   event: ethereum.Event
@@ -325,7 +392,11 @@ function handleTransferEvent(
         getOrCreateAccount(destination),
         token
       );
+<<<<<<< HEAD
       if (balance.amount == BIGINT_ONE) {
+=======
+      if (balance.amount == BIGDECIMAL_ZERO) {
+>>>>>>> b5219fd (Squashed All)
         // It means the receiver's token balance is 0 before transferal.
         toBalanceIsZeroNum = BIGINT_ONE;
       }
@@ -345,12 +416,23 @@ function handleTransferEvent(
       .minus(FromBalanceToZeroNum)
       .plus(toAddressIsNewHolderNum)
       .plus(toBalanceIsZeroNum);
+<<<<<<< HEAD
     dailySnapshot.cumulativeHolderCount =
       dailySnapshot.cumulativeHolderCount.plus(toAddressIsNewHolderNum);
     dailySnapshot.dailyEventCount += 1;
     dailySnapshot.dailyTransferCount += 1;
     dailySnapshot.dailyTransferAmount =
       dailySnapshot.dailyTransferAmount.plus(amount);
+=======
+    dailySnapshot.cumulativeHolderCount = dailySnapshot.cumulativeHolderCount.plus(
+      toAddressIsNewHolderNum
+    );
+    dailySnapshot.dailyEventCount += 1;
+    dailySnapshot.dailyTransferCount += 1;
+    dailySnapshot.dailyTransferAmount = dailySnapshot.dailyTransferAmount.plus(
+      amount
+    );
+>>>>>>> b5219fd (Squashed All)
     dailySnapshot.blockNumber = event.block.number;
     dailySnapshot.timestamp = event.block.timestamp;
 
@@ -359,12 +441,23 @@ function handleTransferEvent(
       .minus(FromBalanceToZeroNum)
       .plus(toAddressIsNewHolderNum)
       .plus(toBalanceIsZeroNum);
+<<<<<<< HEAD
     hourlySnapshot.cumulativeHolderCount =
       hourlySnapshot.cumulativeHolderCount.plus(toAddressIsNewHolderNum);
     hourlySnapshot.hourlyEventCount += 1;
     hourlySnapshot.hourlyTransferCount += 1;
     hourlySnapshot.hourlyTransferAmount =
       hourlySnapshot.hourlyTransferAmount.plus(amount);
+=======
+    hourlySnapshot.cumulativeHolderCount = hourlySnapshot.cumulativeHolderCount.plus(
+      toAddressIsNewHolderNum
+    );
+    hourlySnapshot.hourlyEventCount += 1;
+    hourlySnapshot.hourlyTransferCount += 1;
+    hourlySnapshot.hourlyTransferAmount = hourlySnapshot.hourlyTransferAmount.plus(
+      amount
+    );
+>>>>>>> b5219fd (Squashed All)
     hourlySnapshot.blockNumber = event.block.number;
     hourlySnapshot.timestamp = event.block.timestamp;
 
@@ -395,11 +488,19 @@ function getOrCreateTokenDailySnapshot(
   newSnapshot.cumulativeHolderCount = token.cumulativeHolderCount;
   newSnapshot.dailyEventCount = 0;
   newSnapshot.dailyTransferCount = 0;
+<<<<<<< HEAD
   newSnapshot.dailyTransferAmount = BIGINT_ZERO;
   newSnapshot.dailyMintCount = 0;
   newSnapshot.dailyMintAmount = BIGINT_ZERO;
   newSnapshot.dailyBurnCount = 0;
   newSnapshot.dailyBurnAmount = BIGINT_ZERO;
+=======
+  newSnapshot.dailyTransferAmount = BIGDECIMAL_ZERO;
+  newSnapshot.dailyMintCount = 0;
+  newSnapshot.dailyMintAmount = BIGDECIMAL_ZERO;
+  newSnapshot.dailyBurnCount = 0;
+  newSnapshot.dailyBurnAmount = BIGDECIMAL_ZERO;
+>>>>>>> b5219fd (Squashed All)
 
   return newSnapshot;
 }
@@ -424,11 +525,19 @@ function getOrCreateTokenHourlySnapshot(
   newSnapshot.cumulativeHolderCount = token.cumulativeHolderCount;
   newSnapshot.hourlyEventCount = 0;
   newSnapshot.hourlyTransferCount = 0;
+<<<<<<< HEAD
   newSnapshot.hourlyTransferAmount = BIGINT_ZERO;
   newSnapshot.hourlyMintCount = 0;
   newSnapshot.hourlyMintAmount = BIGINT_ZERO;
   newSnapshot.hourlyBurnCount = 0;
   newSnapshot.hourlyBurnAmount = BIGINT_ZERO;
+=======
+  newSnapshot.hourlyTransferAmount = BIGDECIMAL_ZERO;
+  newSnapshot.hourlyMintCount = 0;
+  newSnapshot.hourlyMintAmount = BIGDECIMAL_ZERO;
+  newSnapshot.hourlyBurnCount = 0;
+  newSnapshot.hourlyBurnAmount = BIGDECIMAL_ZERO;
+>>>>>>> b5219fd (Squashed All)
 
   return newSnapshot;
 }

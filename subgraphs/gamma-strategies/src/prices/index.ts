@@ -21,11 +21,14 @@ export function getUsdPricePerToken(
 
   let network = dataSource.network();
 
+<<<<<<< HEAD
   // Skip optimism as support has not been added
   if (network == "optimism") {
     return new CustomPriceType();
   }
 
+=======
+>>>>>>> b5219fd (Squashed All)
   // 1. Yearn Lens Oracle
   if (!skipSources.includes(PriceSource.YEARN)) {
     let yearnLensPrice = getTokenPriceFromYearnLens(tokenAddr, network);

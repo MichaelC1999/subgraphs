@@ -2,6 +2,7 @@ specVersion: 0.0.4
 repository: https://github.com/messari/subgraphs
 schema:
   file: ./schema.graphql
+<<<<<<< HEAD
 features:
   - grafting
 dataSources:
@@ -12,10 +13,21 @@ dataSources:
       address: "0x20dd72Ed959b6147912C2e529F0a0C651c33c9ce"
       abi: Vault
       startBlock: 16896079
+=======
+dataSources:
+  - kind: ethereum/contract
+    name: Vault
+    network: mainnet
+    source:
+      address: "0xBA12222222228d8Ba445958a75a0704d566BF2C8"
+      abi: Vault
+      startBlock: 12272146
+>>>>>>> b5219fd (Squashed All)
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
+<<<<<<< HEAD
       file: ./src/mappings/vaultMappings.ts
       entities:
         - DexAmmProtocol
@@ -33,6 +45,23 @@ dataSources:
           file: ./abis/beethoven-x/ProtocolFeesCollector.json
         - name: ERC20
           file: ./abis/beethoven-x/ERC20.json
+=======
+      entities:
+        - DexAmmProtocol
+      abis:
+        - name: Vault
+          file: ./abis/Vault.json
+        - name: WeightedPool
+          file: ./abis/WeightedPool.json
+        - name: Gauge
+          file: ./abis/Gauge.json
+        - name: GaugeController
+          file: ./abis/GaugeController.json
+        - name: FeesCollector
+          file: ./abis/FeesCollector.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+>>>>>>> b5219fd (Squashed All)
 
         ###########################################
         ############## Price Oracle ###############
@@ -75,6 +104,7 @@ dataSources:
           handler: handlePoolBalanceChanged
         - event: Swap(indexed bytes32,indexed address,indexed address,uint256,uint256)
           handler: handleSwap
+<<<<<<< HEAD
 
   - kind: ethereum/contract
     name: MasterChefV2
@@ -83,10 +113,23 @@ dataSources:
       address: "0x8166994d9ebBe5829EC86Bd81258149B87faCfd3"
       abi: MasterChefV2
       startBlock: 18508347
+=======
+      file: ./src/mappings/vaultMappings.ts
+
+
+  - kind: ethereum/contract
+    name: GaugeController
+    network: mainnet
+    source:
+      address: "0xC128468b7Ce63eA702C1f104D55A2566b13D3ABD"
+      abi: GaugeController
+      startBlock: 14457014
+>>>>>>> b5219fd (Squashed All)
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
+<<<<<<< HEAD
       file: ./src/mappings/masterChefV2Mappings.ts
       entities:
         - MasterChefV2
@@ -98,6 +141,23 @@ dataSources:
           file: ./abis/beethoven-x/masterchef/MasterChefV2.json
         - name: ERC20
           file: ./abis/beethoven-x/ERC20.json
+=======
+      entities:
+        - DexAmmProtocol
+      abis:
+        - name: GaugeController
+          file: ./abis/GaugeController.json
+        - name: Gauge
+          file: ./abis/Gauge.json
+        - name: Vault
+          file: ./abis/Vault.json
+        - name: WeightedPool
+          file: ./abis/WeightedPool.json
+        - name: FeesCollector
+          file: ./abis/FeesCollector.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+>>>>>>> b5219fd (Squashed All)
 
         ###########################################
         ############## Price Oracle ###############
@@ -131,6 +191,7 @@ dataSources:
           file: ./abis/Prices/SushiSwap/Pair.json
         - name: CalculationsSushiSwap
           file: ./abis/Prices/Calculations/SushiSwap.json
+<<<<<<< HEAD
         
       eventHandlers:
         - event: Deposit(indexed address,indexed uint256,uint256,indexed address)
@@ -145,26 +206,37 @@ dataSources:
           handler: handleLogPoolAddition
         - event: UpdateEmissionRate(indexed address,uint256)
           handler: handleUpdateEmissionRate
-
-templates:
+=======
+      eventHandlers:
+        - event: NewGauge(address,int128,uint256)
+          handler: handleNewGauge
+      file: ./src/mappings/GaugeControllerMappings.ts
   - kind: ethereum/contract
-    name: WeightedPool
-    network: fantom
+    name: BalancerMinter
+    network: mainnet
     source:
-      abi: WeightedPool
+      address: "0x239e55f427d44c3cc793f49bfb507ebe76638a2b"
+      abi: BalancerMinter
+      startBlock: 14457016
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
       language: wasm/assemblyscript
-      file: ./src/mappings/poolMappings.ts
       entities:
-        - WeightedPool
-        - LiquidityPoolFee
+        - DexAmmProtocol
       abis:
+        - name: BalancerMinter
+          file: ./abis/BalancerMinter.json
+        - name: Vault
+          file: ./abis/Vault.json
         - name: WeightedPool
-          file: ./abis/beethoven-x/WeightedPool.json
-        - name: FeesCollector
-          file: ./abis/beethoven-x/ProtocolFeesCollector.json
+          file: ./abis/WeightedPool.json
+        - name: Gauge
+          file: ./abis/Gauge.json
+        - name: GaugeController
+          file: ./abis/GaugeController.json
+        - name: ERC20
+          file: ./abis/ERC20.json
 
         ###########################################
         ############## Price Oracle ###############
@@ -198,7 +270,159 @@ templates:
           file: ./abis/Prices/SushiSwap/Pair.json
         - name: CalculationsSushiSwap
           file: ./abis/Prices/Calculations/SushiSwap.json
+      eventHandlers:
+        - event: Minted(indexed address,address,uint256)
+          handler: handleMinted
+      file: ./src/mappings/balancerMinterMappings.ts
+>>>>>>> b5219fd (Squashed All)
+
+templates:
+  - kind: ethereum/contract
+    name: WeightedPool
+<<<<<<< HEAD
+    network: fantom
+=======
+    network: mainnet
+>>>>>>> b5219fd (Squashed All)
+    source:
+      abi: WeightedPool
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+<<<<<<< HEAD
+      file: ./src/mappings/poolMappings.ts
+=======
+>>>>>>> b5219fd (Squashed All)
+      entities:
+        - WeightedPool
+        - LiquidityPoolFee
+      abis:
+        - name: WeightedPool
+<<<<<<< HEAD
+          file: ./abis/beethoven-x/WeightedPool.json
+        - name: FeesCollector
+          file: ./abis/beethoven-x/ProtocolFeesCollector.json
+
+=======
+          file: ./abis/WeightedPool.json
+        - name: Vault
+          file: ./abis/Vault.json
+        - name: FeesCollector
+          file: ./abis/FeesCollector.json
+        - name: Gauge
+          file: ./abis/Gauge.json
+        - name: GaugeController
+          file: ./abis/GaugeController.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        
+>>>>>>> b5219fd (Squashed All)
+        ###########################################
+        ############## Price Oracle ###############
+        ###########################################
+        # Curve Contracts
+        - name: CurveRegistry
+          file: ./abis/Prices/Curve/Registry.json
+        - name: CurvePoolRegistry
+          file: ./abis/Prices/Curve/PoolRegistry.json
+        - name: CalculationsCurve
+          file: ./abis/Prices/Calculations/Curve.json
+        # YearnLens Contracts
+        - name: YearnLensContract
+          file: ./abis/Prices/YearnLens.json
+        # ChainLink Contracts
+        - name: ChainLinkContract
+          file: ./abis/Prices/ChainLink.json
+        # Uniswap Contracts
+        - name: UniswapRouter
+          file: ./abis/Prices/Uniswap/Router.json
+        - name: UniswapFactory
+          file: ./abis/Prices/Uniswap/Factory.json
+        - name: UniswapPair
+          file: ./abis/Prices/Uniswap/Pair.json
+        # SushiSwap Contracts
+        - name: SushiSwapRouter
+          file: ./abis/Prices/SushiSwap/Router.json
+        - name: SushiSwapFactory
+          file: ./abis/Prices/SushiSwap/Factory.json
+        - name: SushiSwapPair
+          file: ./abis/Prices/SushiSwap/Pair.json
+        - name: CalculationsSushiSwap
+          file: ./abis/Prices/Calculations/SushiSwap.json
+<<<<<<< HEAD
           
       eventHandlers:
         - event: SwapFeePercentageChanged(uint256)
           handler: handleSwapFeePercentageChange
+=======
+      eventHandlers:
+        - event: SwapFeePercentageChanged(uint256)
+          handler: handleSwapFeePercentageChanged
+      file: ./src/mappings/poolMappings.ts
+
+  - kind: ethereum/contract
+    name: Gauge
+    network: mainnet
+    source:
+      abi: Gauge
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - WeightedPool
+        - LiquidityPoolFee
+      abis:
+        - name: Gauge
+          file: ./abis/Gauge.json
+        - name: GaugeController
+          file: ./abis/GaugeController.json
+        - name: Vault
+          file: ./abis/Vault.json
+        - name: WeightedPool
+          file: ./abis/WeightedPool.json
+        - name: FeesCollector
+          file: ./abis/FeesCollector.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+        
+        ###########################################
+        ############## Price Oracle ###############
+        ###########################################
+        # Curve Contracts
+        - name: CurveRegistry
+          file: ./abis/Prices/Curve/Registry.json
+        - name: CurvePoolRegistry
+          file: ./abis/Prices/Curve/PoolRegistry.json
+        - name: CalculationsCurve
+          file: ./abis/Prices/Calculations/Curve.json
+        # YearnLens Contracts
+        - name: YearnLensContract
+          file: ./abis/Prices/YearnLens.json
+        # ChainLink Contracts
+        - name: ChainLinkContract
+          file: ./abis/Prices/ChainLink.json
+        # Uniswap Contracts
+        - name: UniswapRouter
+          file: ./abis/Prices/Uniswap/Router.json
+        - name: UniswapFactory
+          file: ./abis/Prices/Uniswap/Factory.json
+        - name: UniswapPair
+          file: ./abis/Prices/Uniswap/Pair.json
+        # SushiSwap Contracts
+        - name: SushiSwapRouter
+          file: ./abis/Prices/SushiSwap/Router.json
+        - name: SushiSwapFactory
+          file: ./abis/Prices/SushiSwap/Factory.json
+        - name: SushiSwapPair
+          file: ./abis/Prices/SushiSwap/Pair.json
+        - name: CalculationsSushiSwap
+          file: ./abis/Prices/Calculations/SushiSwap.json
+      eventHandlers:
+        - event: RewardDistributorUpdated(indexed address,address)
+          handler: handleRewardDistributorUpdated
+        - event: UpdateLiquidityLimit(indexed address,uint256,uint256,uint256,uint256)
+          handler: handleUpdateLiquidityLimit
+      file: ./src/mappings/gaugeMappings.ts
+>>>>>>> b5219fd (Squashed All)

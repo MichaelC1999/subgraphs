@@ -55,7 +55,10 @@ import {
   setSupplyInterestRate,
   snapshotFinancials,
   TokenData,
+<<<<<<< HEAD
   updateAllMarketPrices,
+=======
+>>>>>>> b5219fd (Squashed All)
   UpdateMarketData,
   _getOrCreateProtocol,
   _handleActionPaused,
@@ -276,7 +279,10 @@ export function handleMarketListed(event: MarketListed): void {
 
 export function handleMarketEntered(event: MarketEntered): void {
   _handleMarketEntered(
+<<<<<<< HEAD
     comptrollerAddr,
+=======
+>>>>>>> b5219fd (Squashed All)
     event.params.cToken.toHexString(),
     event.params.account.toHexString(),
     true
@@ -285,7 +291,10 @@ export function handleMarketEntered(event: MarketEntered): void {
 
 export function handleMarketExited(event: MarketExited): void {
   _handleMarketEntered(
+<<<<<<< HEAD
     comptrollerAddr,
+=======
+>>>>>>> b5219fd (Squashed All)
     event.params.cToken.toHexString(),
     event.params.account.toHexString(),
     false
@@ -452,10 +461,13 @@ function updateMarket(
     return;
   }
 
+<<<<<<< HEAD
   if (updateMarketPrices) {
     updateAllMarketPrices(comptrollerAddress, blockNumber);
   }
 
+=======
+>>>>>>> b5219fd (Squashed All)
   // compound v2 specific price calculation (see ./prices.ts)
   let underlyingTokenPriceUSD = getUSDPriceOfToken(market, blockNumber.toI32());
 
@@ -544,7 +556,10 @@ function updateMarket(
   market.totalValueLockedUSD = underlyingSupplyUSD;
   market.totalDepositBalanceUSD = underlyingSupplyUSD;
 
+<<<<<<< HEAD
   market._borrowBalance = newTotalBorrow;
+=======
+>>>>>>> b5219fd (Squashed All)
   market.totalBorrowBalanceUSD = newTotalBorrow
     .toBigDecimal()
     .div(exponentToBigDecimal(underlyingToken.decimals))

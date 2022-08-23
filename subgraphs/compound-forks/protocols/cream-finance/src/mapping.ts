@@ -65,7 +65,10 @@ export function handleNewPriceOracle(event: NewPriceOracle): void {
 
 export function handleMarketEntered(event: MarketEntered): void {
   _handleMarketEntered(
+<<<<<<< HEAD
     comptrollerAddr,
+=======
+>>>>>>> b5219fd (Squashed All)
     event.params.cToken.toHexString(),
     event.params.account.toHexString(),
     true
@@ -74,7 +77,10 @@ export function handleMarketEntered(event: MarketEntered): void {
 
 export function handleMarketExited(event: MarketExited): void {
   _handleMarketEntered(
+<<<<<<< HEAD
     comptrollerAddr,
+=======
+>>>>>>> b5219fd (Squashed All)
     event.params.cToken.toHexString(),
     event.params.account.toHexString(),
     false
@@ -87,10 +93,14 @@ export function handleMarketListed(event: MarketListed): void {
   let cTokenAddr = event.params.cToken;
   // cream finance emits a MarketListed event that lists an invalid CToken
   // hardcode to skip it otherwise it messes up ETH token
+<<<<<<< HEAD
   if (
     cTokenAddr ==
     Address.fromString("0xbdf447b39d152d6a234b4c02772b8ab5d1783f72")
   ) {
+=======
+  if (cTokenAddr == Address.fromString("0xbdf447b39d152d6a234b4c02772b8ab5d1783f72")) {
+>>>>>>> b5219fd (Squashed All)
     return;
   }
   let cToken = Token.load(cTokenAddr.toHexString());
@@ -281,7 +291,10 @@ export function handleAccrueInterest(event: AccrueInterest): void {
     comptrollerAddr,
     interestAccumulated,
     totalBorrows,
+<<<<<<< HEAD
     false, // do not update all prices
+=======
+>>>>>>> b5219fd (Squashed All)
     event
   );
 }
@@ -293,7 +306,11 @@ function getOrCreateProtocol(): LendingProtocol {
     "CREAM Finance",
     "cream-finance",
     "2.0.1",
+<<<<<<< HEAD
     "1.1.2",
+=======
+    "1.1.0",
+>>>>>>> b5219fd (Squashed All)
     "1.0.0",
     network,
     comptroller.try_liquidationIncentiveMantissa(),

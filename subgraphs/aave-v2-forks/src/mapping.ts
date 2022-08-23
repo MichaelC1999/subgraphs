@@ -109,9 +109,15 @@ export function _handleReserveInitialized(
 
   market.protocol = protocol.name;
   market.name = outputTokenEntity.name;
+<<<<<<< HEAD
   market.isActive = true; // initialized to true on creation
   market.canUseAsCollateral = true; // only stopped when protocol is paused
   market.canBorrowFrom = true; // this field changes occasinally, but all markets are set to true after creation
+=======
+  market.isActive = false;
+  market.canUseAsCollateral = false;
+  market.canBorrowFrom = false;
+>>>>>>> b5219fd (Squashed All)
   market.maximumLTV = BIGDECIMAL_ZERO;
   market.liquidationThreshold = BIGDECIMAL_ZERO;
   market.liquidationPenalty = BIGDECIMAL_ZERO;
@@ -150,7 +156,10 @@ export function _handleReserveInitialized(
   market.inputTokenPriceUSD = BIGDECIMAL_ZERO;
   market.outputTokenPriceUSD = BIGDECIMAL_ZERO;
   market.rates = []; // calculated in event ReserveDataUpdated
+<<<<<<< HEAD
   market.prePauseState = [true, true, true];
+=======
+>>>>>>> b5219fd (Squashed All)
 
   market.save();
 }
@@ -198,11 +207,14 @@ export function _handleBorrowingEnabledOnReserve(marketId: Address): void {
   }
 
   market.canBorrowFrom = true;
+<<<<<<< HEAD
   market.prePauseState = [
     market.prePauseState[0],
     market.prePauseState[1],
     true,
   ];
+=======
+>>>>>>> b5219fd (Squashed All)
   market.save();
 }
 
@@ -216,11 +228,14 @@ export function _handleBorrowingDisabledOnReserve(marketId: Address): void {
   }
 
   market.canBorrowFrom = false;
+<<<<<<< HEAD
   market.prePauseState = [
     market.prePauseState[0],
     market.prePauseState[1],
     false,
   ];
+=======
+>>>>>>> b5219fd (Squashed All)
   market.save();
 }
 
@@ -234,11 +249,14 @@ export function _handleReserveActivated(marketId: Address): void {
   }
 
   market.isActive = true;
+<<<<<<< HEAD
   market.prePauseState = [
     true,
     market.prePauseState[1],
     market.prePauseState[2],
   ];
+=======
+>>>>>>> b5219fd (Squashed All)
   market.save();
 }
 
@@ -252,11 +270,14 @@ export function _handleReserveDeactivated(marketId: Address): void {
   }
 
   market.isActive = false;
+<<<<<<< HEAD
   market.prePauseState = [
     false,
     market.prePauseState[1],
     market.prePauseState[2],
   ];
+=======
+>>>>>>> b5219fd (Squashed All)
   market.save();
 }
 
@@ -280,11 +301,16 @@ export function _handleReserveFactorChanged(
 
 export function _handleReserveUsedAsCollateralEnabled(
   marketId: Address,
+<<<<<<< HEAD
   accountID: Address,
   protocolData: ProtocolData
 ): void {
   let protocol = getOrCreateLendingProtocol(protocolData);
 
+=======
+  accountID: Address
+): void {
+>>>>>>> b5219fd (Squashed All)
   let market = Market.load(marketId.toHexString());
   if (!market) {
     log.warning("[ReserveUsedAsCollateralEnabled] Market not found: {}", [
@@ -296,11 +322,18 @@ export function _handleReserveUsedAsCollateralEnabled(
   // grab account
   let account = Account.load(accountID.toHexString());
   if (!account) {
+<<<<<<< HEAD
     account = createAccount(accountID.toHexString());
     account.save();
 
     protocol.cumulativeUniqueUsers += 1;
     protocol.save();
+=======
+    log.warning("[ReserveUsedAsCollateralEnabled] Account not found: {}", [
+      accountID.toHexString(),
+    ]);
+    return;
+>>>>>>> b5219fd (Squashed All)
   }
   let markets = account.enabledCollaterals;
   markets.push(market.id);
@@ -338,6 +371,7 @@ export function _handleReserveUsedAsCollateralDisabled(
   account.save();
 }
 
+<<<<<<< HEAD
 export function _handlePaused(protocolData: ProtocolData): void {
   let protocol = getOrCreateLendingProtocol(protocolData);
 
@@ -379,6 +413,8 @@ export function _handleUnpaused(protocolData: ProtocolData): void {
   }
 }
 
+=======
+>>>>>>> b5219fd (Squashed All)
 ////////////////////////////////
 ///// Transaction Handlers /////
 ////////////////////////////////
@@ -961,7 +997,10 @@ export function _handleLiquidate(
     protocol.save();
   }
   liquidatorAccount.liquidateCount += 1;
+<<<<<<< HEAD
   liquidatorAccount.save();
+=======
+>>>>>>> b5219fd (Squashed All)
   let liquidatorActorID = "liquidator"
     .concat("-")
     .concat(liquidator.toHexString());
@@ -985,6 +1024,7 @@ export function _handleLiquidate(
   }
   account.liquidationCount += 1;
   account.save();
+<<<<<<< HEAD
   let liquidateeActorID = "liquidatee"
     .concat("-")
     .concat(borrower.toHexString());
@@ -996,6 +1036,8 @@ export function _handleLiquidate(
     protocol.cumulativeUniqueLiquidatees += 1;
     protocol.save();
   }
+=======
+>>>>>>> b5219fd (Squashed All)
 
   let repayTokenMarket = Market.load(repayToken.toHexString());
   if (!repayTokenMarket) {
@@ -1040,10 +1082,13 @@ export function _handleLiquidate(
   );
   liquidate.save();
 
+<<<<<<< HEAD
   protocol.cumulativeLiquidateUSD = protocol.cumulativeLiquidateUSD.plus(
     liquidate.amountUSD
   );
   protocol.save();
+=======
+>>>>>>> b5219fd (Squashed All)
   market.cumulativeLiquidateUSD = market.cumulativeLiquidateUSD.plus(
     liquidate.amountUSD
   );

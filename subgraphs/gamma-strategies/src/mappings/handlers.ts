@@ -18,6 +18,7 @@ import { updateUsageMetrics } from "./helpers/usageMetrics";
 import { getOrCreateVault, updateVaultSnapshots } from "./helpers/vaults";
 import { UsageType } from "../common/constants";
 import { updateRevenue, updateTvl } from "./helpers/financials";
+<<<<<<< HEAD
 import { Vault } from "../../generated/schema";
 
 export function handleHypeAdded(event: HypeAdded): void {
@@ -27,6 +28,10 @@ export function handleHypeAdded(event: HypeAdded): void {
     return;
   }
 
+=======
+
+export function handleHypeAdded(event: HypeAdded): void {
+>>>>>>> b5219fd (Squashed All)
   let hypervisorContract = HypervisorContract.bind(event.params.hype);
   let test_amount = hypervisorContract.try_getTotalAmounts();
   // Prevents subgraph crashing from bad address added to registry
@@ -38,7 +43,11 @@ export function handleHypeAdded(event: HypeAdded): void {
   }
 
   getOrCreateYieldAggregator(event.address);
+<<<<<<< HEAD
   getOrCreateVault(event.params.hype, event);
+=======
+  getOrCreateVault(event.params.hype, event.block);
+>>>>>>> b5219fd (Squashed All)
 
   HypervisorTemplate.create(event.params.hype);
 }
@@ -48,9 +57,15 @@ export function handleDeposit(event: Deposit): void {
   createDeposit(event);
 
   // Update vault token supply
+<<<<<<< HEAD
   let vault = getOrCreateVault(event.address, event);
   vault.inputTokenBalance = vault.inputTokenBalance.plus(event.params.shares);
   vault.outputTokenSupply = vault.outputTokenSupply!.plus(event.params.shares);
+=======
+  let vault = getOrCreateVault(event.address, event.block);
+  vault.inputTokenBalance += event.params.shares;
+  vault.outputTokenSupply += event.params.shares;
+>>>>>>> b5219fd (Squashed All)
   vault.save();
 
   updateUsageMetrics(event.params.to, UsageType.DEPOSIT, event);
@@ -63,9 +78,15 @@ export function handleWithdraw(event: Withdraw): void {
   createWithdraw(event);
 
   // Update vault token supply
+<<<<<<< HEAD
   let vault = getOrCreateVault(event.address, event);
   vault.inputTokenBalance = vault.inputTokenBalance.minus(event.params.shares);
   vault.outputTokenSupply = vault.outputTokenSupply!.minus(event.params.shares);
+=======
+  let vault = getOrCreateVault(event.address, event.block);
+  vault.inputTokenBalance -= event.params.shares;
+  vault.outputTokenSupply -= event.params.shares;
+>>>>>>> b5219fd (Squashed All)
   vault.save();
 
   updateUsageMetrics(event.params.to, UsageType.WITHDRAW, event);
@@ -77,5 +98,8 @@ export function handleRebalance(event: Rebalance): void {
   createRebalance(event);
   updateRevenue(event);
   updateTvl(event);
+<<<<<<< HEAD
   updateVaultSnapshots(event);
+=======
+>>>>>>> b5219fd (Squashed All)
 }

@@ -72,12 +72,15 @@ type RewardToken @entity {
 
   " The type of the reward token "
   type: RewardTokenType!
+<<<<<<< HEAD
 
   " The rate of inflation of this reward token "
   _inflationRate: BigDecimal
 
   " The amount of inflation per day of this reward token "
   _inflationPerDay: BigDecimal
+=======
+>>>>>>> b5219fd (Squashed All)
 }
 
 # Note that trading fee is the fee paid *by* the users, whereas LP fee and
@@ -179,12 +182,19 @@ interface Protocol {
   ##### Snapshots #####
 
   " Daily usage metrics for this protocol "
+<<<<<<< HEAD
   dailyUsageMetrics: [UsageMetricsDailySnapshot!]!
     @derivedFrom(field: "protocol")
 
   " Hourly usage metrics for this protocol "
   hourlyUsageMetrics: [UsageMetricsHourlySnapshot!]!
     @derivedFrom(field: "protocol")
+=======
+  dailyUsageMetrics: [UsageMetricsDailySnapshot!]! @derivedFrom(field: "protocol")
+
+  " Hourly usage metrics for this protocol "
+  hourlyUsageMetrics: [UsageMetricsHourlySnapshot!]! @derivedFrom(field: "protocol")
+>>>>>>> b5219fd (Squashed All)
 
   " Daily financial metrics for this protocol "
   financialMetrics: [FinancialsDailySnapshot!]! @derivedFrom(field: "protocol")
@@ -244,12 +254,19 @@ type DexAmmProtocol implements Protocol @entity {
   ##### Snapshots #####
 
   " Daily usage metrics for this protocol "
+<<<<<<< HEAD
   dailyUsageMetrics: [UsageMetricsDailySnapshot!]!
     @derivedFrom(field: "protocol")
 
   " Hourly usage metrics for this protocol "
   hourlyUsageMetrics: [UsageMetricsHourlySnapshot!]!
     @derivedFrom(field: "protocol")
+=======
+  dailyUsageMetrics: [UsageMetricsDailySnapshot!]! @derivedFrom(field: "protocol")
+
+  " Hourly usage metrics for this protocol "
+  hourlyUsageMetrics: [UsageMetricsHourlySnapshot!]! @derivedFrom(field: "protocol")
+>>>>>>> b5219fd (Squashed All)
 
   " Daily financial metrics for this protocol "
   financialMetrics: [FinancialsDailySnapshot!]! @derivedFrom(field: "protocol")
@@ -811,6 +828,7 @@ type ActiveAccount @entity {
   id: ID!
 }
 
+<<<<<<< HEAD
 #Added Entities
 
 type _MasterChef @entity {
@@ -850,6 +868,8 @@ type _MasterChefStakingPool @entity {
   lastRewardBlock: BigInt!
 }
 
+=======
+>>>>>>> b5219fd (Squashed All)
 # Helper entity for calculating reward emissions
 type _CircularBuffer @entity {
   " 'CIRCULAR_BUFFER' "

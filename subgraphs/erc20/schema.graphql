@@ -34,6 +34,7 @@ type Token @entity {
   burnCount: BigInt!
 
   " Total token supply "
+<<<<<<< HEAD
   totalSupply: BigInt!
 
   " Total token burned "
@@ -41,6 +42,15 @@ type Token @entity {
 
   " Total token minted "
   totalMinted: BigInt!
+=======
+  totalSupply: BigDecimal!
+
+  " Total token burned "
+  totalBurned: BigDecimal!
+
+  " Total token minted "
+  totalMinted: BigDecimal!
+>>>>>>> b5219fd (Squashed All)
 
   " List of token transfers "
   transfers: [TransferEvent!]! @derivedFrom(field: "token")
@@ -66,7 +76,11 @@ type TokenDailySnapshot @entity {
   token: Token!
 
   " Daily total Supply of the token "
+<<<<<<< HEAD
   dailyTotalSupply: BigInt!
+=======
+  dailyTotalSupply: BigDecimal!
+>>>>>>> b5219fd (Squashed All)
 
   " number of accounts holding the token "
   currentHolderCount: BigInt!
@@ -81,19 +95,31 @@ type TokenDailySnapshot @entity {
   dailyTransferCount: Int!
 
   " Total number of token transfered in a day "
+<<<<<<< HEAD
   dailyTransferAmount: BigInt!
+=======
+  dailyTransferAmount: BigDecimal!
+>>>>>>> b5219fd (Squashed All)
 
   " Total number of mints in a day "
   dailyMintCount: Int!
 
   " Total number of token minted in a day "
+<<<<<<< HEAD
   dailyMintAmount: BigInt!
+=======
+  dailyMintAmount: BigDecimal!
+>>>>>>> b5219fd (Squashed All)
 
   " Total number of burns in a day "
   dailyBurnCount: Int!
 
   " Total number of token burnt in a day "
+<<<<<<< HEAD
   dailyBurnAmount: BigInt!
+=======
+  dailyBurnAmount: BigDecimal!
+>>>>>>> b5219fd (Squashed All)
 
   " Block number of this snapshot "
   blockNumber: BigInt!
@@ -110,7 +136,11 @@ type TokenHourlySnapshot @entity {
   token: Token!
 
   " Hourly total Supply of the token "
+<<<<<<< HEAD
   hourlyTotalSupply: BigInt!
+=======
+  hourlyTotalSupply: BigDecimal!
+>>>>>>> b5219fd (Squashed All)
 
   " number of accounts holding this token "
   currentHolderCount: BigInt!
@@ -125,19 +155,31 @@ type TokenHourlySnapshot @entity {
   hourlyTransferCount: Int!
 
   " Total amount of token transfered in a hour "
+<<<<<<< HEAD
   hourlyTransferAmount: BigInt!
+=======
+  hourlyTransferAmount: BigDecimal!
+>>>>>>> b5219fd (Squashed All)
 
   " Total number of mints in a hour "
   hourlyMintCount: Int!
 
   " Total amount of token minted in a hour "
+<<<<<<< HEAD
   hourlyMintAmount: BigInt!
+=======
+  hourlyMintAmount: BigDecimal!
+>>>>>>> b5219fd (Squashed All)
 
   " Total number of burns in a hour "
   hourlyBurnCount: Int!
 
   " Total number of token burnt in a hour "
+<<<<<<< HEAD
   hourlyBurnAmount: BigInt!
+=======
+  hourlyBurnAmount: BigDecimal!
+>>>>>>> b5219fd (Squashed All)
 
   " Block number of this snapshot "
   blockNumber: BigInt!
@@ -196,7 +238,11 @@ type TransferEvent implements Event @entity {
   nonce: Int!
 
   " Quantity of tokens transferred "
+<<<<<<< HEAD
   amount: BigInt!
+=======
+  amount: BigDecimal!
+>>>>>>> b5219fd (Squashed All)
 
   " Account that received the tokens "
   to: Account!
@@ -245,7 +291,11 @@ type AccountBalance @entity {
   token: Token!
 
   " Current account balance "
+<<<<<<< HEAD
   amount: BigInt!
+=======
+  amount: BigDecimal!
+>>>>>>> b5219fd (Squashed All)
 
   " Block number in which the balance was last modified "
   blockNumber: BigInt!
@@ -269,7 +319,11 @@ type AccountBalanceDailySnapshot @entity {
   token: Token!
 
   " Current account balance "
+<<<<<<< HEAD
   amount: BigInt!
+=======
+  amount: BigDecimal!
+>>>>>>> b5219fd (Squashed All)
 
   " Block number in which the balance was last modified "
   blockNumber: BigInt!

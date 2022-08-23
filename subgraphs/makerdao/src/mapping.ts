@@ -941,10 +941,14 @@ export function handleJugFileDuty(event: JugNoteEvent): void {
     let base = jugContract.base();
     let duty = jugContract.ilks(ilk).value0;
     let rate = bigIntToBDUseDecimals(base.plus(duty), RAY).minus(BIGDECIMAL_ONE);
+<<<<<<< HEAD
     let rateAnnualized = BIGDECIMAL_ZERO;
     if (rate.gt(BIGDECIMAL_ZERO)) {
       rateAnnualized = bigDecimalExponential(rate, SECONDS_PER_YEAR_BIGDECIMAL).times(BIGDECIMAL_ONE_HUNDRED);
     }
+=======
+    let rateAnnualized = bigDecimalExponential(rate, SECONDS_PER_YEAR_BIGDECIMAL).times(BIGDECIMAL_ONE_HUNDRED);
+>>>>>>> b5219fd (Squashed All)
     log.info("[handleJugFileDuty] ilk={}, duty={}, rate={}, rateAnnualized={}", [
       ilk.toString(),
       duty.toString(),
@@ -1005,11 +1009,16 @@ export function handlePotFileDsr(event: PotNoteEvent): void {
     // Since DAI saving is not linked to a real market, it is
     // assigned to the artificial "MCD POT" market
     let market = getOrCreateMarket(event.address.toHexString());
+<<<<<<< HEAD
     let rate = bigIntToBDUseDecimals(dsr, RAY).minus(BIGDECIMAL_ONE);
     let rateAnnualized = BIGDECIMAL_ZERO;
     if (rate.gt(BIGDECIMAL_ZERO)) {
       rateAnnualized = bigDecimalExponential(rate, SECONDS_PER_YEAR_BIGDECIMAL).times(BIGDECIMAL_ONE_HUNDRED);
     }
+=======
+    let rate = bigIntToBDUseDecimals(dsr, RAY);
+    let rateAnnualized = bigDecimalExponential(rate, SECONDS_PER_YEAR_BIGDECIMAL).times(BIGDECIMAL_ONE_HUNDRED);
+>>>>>>> b5219fd (Squashed All)
 
     let interestRateID = `${InterestRateSide.LENDER}-${InterestRateType.STABLE}-${event.address.toHexString()}`;
     let interestRate = getOrCreateInterestRate(market.id, InterestRateSide.LENDER, InterestRateType.STABLE);

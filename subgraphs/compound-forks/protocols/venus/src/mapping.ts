@@ -62,7 +62,10 @@ export function handleNewPriceOracle(event: NewPriceOracle): void {
 
 export function handleMarketEntered(event: MarketEntered): void {
   _handleMarketEntered(
+<<<<<<< HEAD
     comptrollerAddr,
+=======
+>>>>>>> b5219fd (Squashed All)
     event.params.cToken.toHexString(),
     event.params.account.toHexString(),
     true
@@ -71,7 +74,10 @@ export function handleMarketEntered(event: MarketEntered): void {
 
 export function handleMarketExited(event: MarketExited): void {
   _handleMarketEntered(
+<<<<<<< HEAD
     comptrollerAddr,
+=======
+>>>>>>> b5219fd (Squashed All)
     event.params.cToken.toHexString(),
     event.params.account.toHexString(),
     false
@@ -268,7 +274,10 @@ export function handleAccrueInterest(event: AccrueInterest): void {
     comptrollerAddr,
     interestAccumulated,
     totalBorrows,
+<<<<<<< HEAD
     false, // do not update all prices
+=======
+>>>>>>> b5219fd (Squashed All)
     event
   );
 }
@@ -280,7 +289,11 @@ function getOrCreateProtocol(): LendingProtocol {
     "Venus",
     "venus",
     "2.0.1",
+<<<<<<< HEAD
     "1.1.3",
+=======
+    "1.1.1",
+>>>>>>> b5219fd (Squashed All)
     "1.0.0",
     Network.BSC,
     comptroller.try_liquidationIncentiveMantissa(),

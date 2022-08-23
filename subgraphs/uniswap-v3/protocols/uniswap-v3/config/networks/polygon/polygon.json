@@ -1,6 +1,9 @@
 {
   "network": "matic",
+<<<<<<< HEAD
   "factoryAddress": "0x1F98431c8aD98523631AE4a59f267346ea31F984",
+=======
+>>>>>>> b5219fd (Squashed All)
   "startBlock": 22757546,
   "deployment": "UNISWAP_V3_POLYGON",
   "graftEnabled": false,

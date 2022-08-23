@@ -1,5 +1,6 @@
 # Euler Finance Subgraph
 
+<<<<<<< HEAD
 ## Intro
 
 Lending protocols are the life-blood of Decentralized Finance (DeFi) and provide an essential “money lego” to replicate banks in TradFi. Therefore, it’s no surprise that AAVE — a lending protocol — ranks at #2 on DefiLlama TVL rankings for protocols. 
@@ -7,6 +8,8 @@ Lending protocols are the life-blood of Decentralized Finance (DeFi) and provide
 Euler follows in the footsteps of lending protocols like AAVE and Compound but focuses on the permissionless aspect i.e. it allows users to create their own markets for any Ethereum ERC20 token. This blog from the Euler team provides much more detailed info on the benefits provided by Euler — [https://blog.euler.finance/introducing-euler-8f4422f13848](https://blog.euler.finance/introducing-euler-8f4422f13848). 
 
 
+=======
+>>>>>>> b5219fd (Squashed All)
 ## Calculation Methodology v1.0.0
 
 ### Total Value Locked (TVL) USD
@@ -65,6 +68,7 @@ Not applicable to Euler Finance
 
 ## Reference and Useful Links
 
+<<<<<<< HEAD
 
 
 * Protocol
@@ -97,3 +101,22 @@ Not applicable to Euler Finance
     * https://thegraph.com/hosted-service/subgraph/euler-xyz/euler-mainnet
 * Explanation of lending metrics
     * https://docs.euler.finance/risk-framework/methodology
+=======
+Protocol: https://euler.finance/
+
+Docs: https://docs.euler.finance/
+
+Smart contracts: https://github.com/euler-xyz/euler-contracts
+
+Deployed addresses: https://docs.euler.finance/protocol/addresses
+
+Existing subgraphs: https://thegraph.com/hosted-service/subgraph/euler-xyz/euler-mainnet
+
+Existing Subgraph in Studio: N/A
+
+Explanation of lending metrics: https://docs.euler.finance/risk-framework/methodology
+
+Dune Dashboard for Testing: https://dune.com/shippooordao/Euler-Finance-Dashboard https://dune.com/altooptimo/Euler-Finance
+
+Other dashboads: https://tokenterminal.com/terminal/projects/euler
+>>>>>>> b5219fd (Squashed All)

@@ -12,5 +12,9 @@ const DashboardTag = styled("div")`
 `;
 
 export const DashboardVersion = () => {
+<<<<<<< HEAD
   return <DashboardTag>v1.3.8</DashboardTag>;
+=======
+  return <DashboardTag>v1.3.6</DashboardTag>;
+>>>>>>> b5219fd (Squashed All)
 };

@@ -38,6 +38,7 @@ export function getPriceFromRouter(token0Address: Address, token1Address: Addres
   let ethAddress = constants.WHITELIST_TOKENS_MAP.get(network)!.get("ETH")!;
   let wethAddress = constants.WHITELIST_TOKENS_MAP.get(network)!.get("WETH")!;
 
+<<<<<<< HEAD
   // Construct swap path
   let path: Address[] = [];
   let numberOfJumps: BigInt;
@@ -70,6 +71,33 @@ export function getPriceFromRouter(token0Address: Address, token1Address: Addres
       path.push(wethAddress);
       path.push(token1Address);
     }
+=======
+  // Convert ETH address to WETH
+  if (token0Address == ethAddress) {
+    token0Address = wethAddress;
+  }
+  if (token1Address == ethAddress) {
+    token1Address = wethAddress;
+  }
+
+  let path: Address[] = [];
+  let numberOfJumps: BigInt;
+  let inputTokenIsWeth: bool = token0Address == wethAddress || token1Address == wethAddress;
+
+  if (inputTokenIsWeth) {
+    // Path = [token0, weth] or [weth, token1]
+    numberOfJumps = BigInt.fromI32(1);
+
+    path.push(token0Address);
+    path.push(token1Address);
+  } else {
+    // Path = [token0, weth, token1]
+    numberOfJumps = BigInt.fromI32(2);
+
+    path.push(token0Address);
+    path.push(wethAddress);
+    path.push(token1Address);
+>>>>>>> b5219fd (Squashed All)
   }
 
   let token0Decimals = utils.getTokenDecimals(token0Address);
@@ -99,7 +127,11 @@ export function getPriceFromRouter(token0Address: Address, token1Address: Addres
       .div(constants.BIGINT_TEN_THOUSAND.minus(feeBips.times(numberOfJumps)))
       .toBigDecimal();
 
+<<<<<<< HEAD
     return CustomPriceType.initialize(amountOutBigDecimal, constants.USDC_DECIMALS_MAP.get(network)!.toI32() as u8);
+=======
+    return CustomPriceType.initialize(amountOutBigDecimal, constants.DEFAULT_USDC_DECIMALS);
+>>>>>>> b5219fd (Squashed All)
   }
 
   return new CustomPriceType();

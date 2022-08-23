@@ -1,8 +1,14 @@
 import { BigInt, BigDecimal } from "@graphprotocol/graph-ts";
+<<<<<<< HEAD
 import { IPFS_HASH } from "../../configurations/configure";
 
 // Constants
 export const REGISTRY_HASH = IPFS_HASH;
+=======
+
+// Constants
+export const REGISTRY_HASH = "QmV1Ppv576oCPTNE2jN1w6pp6YFVNVkvU45xZWyUMrpKEH"; // data/tokens.json
+>>>>>>> b5219fd (Squashed All)
 
 export const DEFAULT_DECIMALS = 18;
 export const GENESIS_ADDRESS = "0x0000000000000000000000000000000000000000";

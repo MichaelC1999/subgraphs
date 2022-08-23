@@ -33,6 +33,7 @@ export function handleSetFeeProtocol(event: SetFeeProtocol): void {
 
 // Handle a mint event emitted from a pool contract. Considered a deposit into the given liquidity pool.
 export function handleMint(event: MintEvent): void {
+<<<<<<< HEAD
   createDeposit(
     event,
     event.params.owner,
@@ -40,12 +41,17 @@ export function handleMint(event: MintEvent): void {
     event.params.amount1
   );
   updateUsageMetrics(event, event.params.owner, UsageType.DEPOSIT);
+=======
+  createDeposit(event, event.params.amount0, event.params.amount1);
+  updateUsageMetrics(event, event.params.sender, UsageType.DEPOSIT);
+>>>>>>> b5219fd (Squashed All)
   updateFinancials(event);
   updatePoolMetrics(event);
 }
 
 // Handle a burn event emitted from a pool contract. Considered a withdraw into the given liquidity pool.
 export function handleBurn(event: BurnEvent): void {
+<<<<<<< HEAD
   createWithdraw(
     event,
     event.params.owner,
@@ -53,6 +59,10 @@ export function handleBurn(event: BurnEvent): void {
     event.params.amount1
   );
   updateUsageMetrics(event, event.params.owner, UsageType.WITHDRAW);
+=======
+  createWithdraw(event, event.params.amount0, event.params.amount1);
+  updateUsageMetrics(event, event.transaction.from, UsageType.WITHDRAW);
+>>>>>>> b5219fd (Squashed All)
   updateFinancials(event);
   updatePoolMetrics(event);
 }
@@ -69,5 +79,9 @@ export function handleSwap(event: SwapEvent): void {
   );
   updateFinancials(event);
   updatePoolMetrics(event);
+<<<<<<< HEAD
   updateUsageMetrics(event, event.params.sender, UsageType.SWAP);
+=======
+  updateUsageMetrics(event, event.transaction.from, UsageType.SWAP);
+>>>>>>> b5219fd (Squashed All)
 }

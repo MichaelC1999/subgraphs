@@ -1,4 +1,8 @@
 import {
+<<<<<<< HEAD
+=======
+  log,
+>>>>>>> b5219fd (Squashed All)
   BigInt,
   Address,
   ethereum,
@@ -7,15 +11,23 @@ import {
 } from "@graphprotocol/graph-ts";
 import {
   getOrCreateToken,
+<<<<<<< HEAD
   getOrCreateLiquidityPool,
   getOrCreateDexAmmProtocol,
   getOrCreateLiquidityPoolFee,
 } from "./initializers";
+=======
+  getOrCreateDexAmmProtocol,
+  getOrCreateLiquidityPoolFee,
+} from "./initializers";
+import { getUsdPricePerToken } from "../prices";
+>>>>>>> b5219fd (Squashed All)
 import * as constants from "../common/constants";
 import { PoolFeesType, PoolTokensType } from "./types";
 import { Token, LiquidityPool } from "../../generated/schema";
 import { Vault as VaultContract } from "../../generated/Vault/Vault";
 import { ERC20 as ERC20Contract } from "../../generated/Vault/ERC20";
+<<<<<<< HEAD
 import { WeightedPool as WeightedPoolContract } from "../../generated/templates/WeightedPool/WeightedPool";
 import { FeesCollector as FeesCollectorContract } from "../../generated/templates/WeightedPool/FeesCollector";
 import {
@@ -24,6 +36,11 @@ import {
   INT_ONE,
   INT_ZERO,
 } from "../common/constants";
+=======
+import { Gauge as LiquidityGaugeContract } from "../../generated/templates/gauge/Gauge";
+import { WeightedPool as WeightedPoolContract } from "../../generated/templates/WeightedPool/WeightedPool";
+import { FeesCollector as FeesCollectorContract } from "../../generated/templates/WeightedPool/FeesCollector";
+>>>>>>> b5219fd (Squashed All)
 
 export function enumToPrefix(snake: string): string {
   return snake.toLowerCase().replace("_", "-") + "-";
@@ -40,11 +57,16 @@ export function readValue<T>(
   return callResult.reverted ? defaultValue : callResult.value;
 }
 
+<<<<<<< HEAD
 export function getOrCreateTokenFromString(
   tokenAddress: string,
   blockNumber: BigInt
 ): Token {
   return getOrCreateToken(Address.fromString(tokenAddress), blockNumber);
+=======
+export function getOrCreateTokenFromString(tokenAddress: string): Token {
+  return getOrCreateToken(Address.fromString(tokenAddress));
+>>>>>>> b5219fd (Squashed All)
 }
 
 export function getTokenDecimals(tokenAddr: Address): BigDecimal {
@@ -71,6 +93,7 @@ export function getPoolTokensInfo(poolId: Bytes): PoolTokensType {
   );
 }
 
+<<<<<<< HEAD
 export function getOutputTokenPriceUSD(
   poolAddress: Address,
   block: ethereum.Block
@@ -109,6 +132,19 @@ export function getOutputTokenPriceUSD(
   outputToken.save();
 
   return outputTokenPriceUSD;
+=======
+export function getPoolFromGauge(gaugeAddress: Address): Address | null {
+  const gaugeContract = LiquidityGaugeContract.bind(gaugeAddress);
+
+  let poolAddress = readValue<Address>(
+    gaugeContract.try_lp_token(),
+    constants.NULL.TYPE_ADDRESS
+  );
+
+  if (poolAddress.equals(constants.NULL.TYPE_ADDRESS)) return null;
+  
+  return poolAddress;
+>>>>>>> b5219fd (Squashed All)
 }
 
 export function calculateAverage(prices: BigDecimal[]): BigDecimal {
@@ -149,14 +185,19 @@ export function getPoolTokenWeights(poolAddress: Address): BigDecimal[] {
 
 export function getPoolTVL(
   inputTokens: string[],
+<<<<<<< HEAD
   inputTokenBalances: BigInt[],
   block: ethereum.Block
+=======
+  inputTokenBalances: BigInt[]
+>>>>>>> b5219fd (Squashed All)
 ): BigDecimal {
   let totalValueLockedUSD = constants.BIGDECIMAL_ZERO;
 
   for (let idx = 0; idx < inputTokens.length; idx++) {
     let inputTokenBalance = inputTokenBalances[idx];
 
+<<<<<<< HEAD
     let inputToken = getOrCreateTokenFromString(inputTokens[idx], block.number);
 
     let amountUSD = inputTokenBalance
@@ -164,6 +205,17 @@ export function getPoolTVL(
         constants.BIGINT_TEN.pow(inputToken.decimals as u8).toBigDecimal()
       )
       .times(inputToken.lastPriceUSD!);
+=======
+    let inputTokenAddress = Address.fromString(inputTokens[idx]);
+    let inputTokenPrice = getUsdPricePerToken(inputTokenAddress);
+    let inputTokenDecimals = getTokenDecimals(inputTokenAddress);
+
+    let amountUSD = inputTokenBalance
+      .divDecimal(inputTokenDecimals)
+      .times(inputTokenPrice.usdPrice)
+      .div(inputTokenPrice.decimalsBaseTen);
+
+>>>>>>> b5219fd (Squashed All)
     totalValueLockedUSD = totalValueLockedUSD.plus(amountUSD);
   }
 
@@ -253,6 +305,7 @@ export function updateProtocolAfterNewLiquidityPool(
 
   protocol.save();
 }
+<<<<<<< HEAD
 
 // convert decimals
 export function exponentToBigDecimal(decimals: i32): BigDecimal {
@@ -279,3 +332,5 @@ export function convertTokenToDecimal(
 export function roundToWholeNumber(n: BigDecimal): BigDecimal {
   return n.truncate(0);
 }
+=======
+>>>>>>> b5219fd (Squashed All)

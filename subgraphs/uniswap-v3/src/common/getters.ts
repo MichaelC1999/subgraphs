@@ -1,5 +1,9 @@
 // import { log } from '@graphprotocol/graph-ts'
+<<<<<<< HEAD
 import { Address, BigDecimal, ethereum, log } from "@graphprotocol/graph-ts";
+=======
+import { Address, ethereum } from "@graphprotocol/graph-ts";
+>>>>>>> b5219fd (Squashed All)
 import { NetworkConfigs } from "../../configurations/configure";
 import { ERC20 } from "../../generated/Factory/ERC20";
 import {
@@ -344,6 +348,7 @@ export function getOrCreateUsersHelper(): _HelperStore {
   }
   return uniqueUsersTotal;
 }
+<<<<<<< HEAD
 
 export function getTradingFee(poolAddress: string): BigDecimal {
   let feeId = "trading-fee-" + poolAddress;
@@ -354,3 +359,5 @@ export function getTradingFee(poolAddress: string): BigDecimal {
   }
   return fee.feePercentage;
 }
+=======
+>>>>>>> b5219fd (Squashed All)

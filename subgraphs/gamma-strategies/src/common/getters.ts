@@ -66,7 +66,10 @@ export function getOrCreateUsageMetricDailySnapshot(
     usageMetrics.dailyTransactionCount = INT_ZERO;
     usageMetrics.dailyDepositCount = INT_ZERO;
     usageMetrics.dailyWithdrawCount = INT_ZERO;
+<<<<<<< HEAD
     usageMetrics.totalPoolCount = INT_ZERO;
+=======
+>>>>>>> b5219fd (Squashed All)
 
     usageMetrics.blockNumber = event.block.number;
     usageMetrics.timestamp = event.block.timestamp;
@@ -98,7 +101,10 @@ export function getOrCreateUsageMetricHourlySnapshot(
     usageMetrics.hourlyTransactionCount = INT_ZERO;
     usageMetrics.hourlyDepositCount = INT_ZERO;
     usageMetrics.hourlyWithdrawCount = INT_ZERO;
+<<<<<<< HEAD
     // usageMetrics.totalPoolCount = INT_ZERO;
+=======
+>>>>>>> b5219fd (Squashed All)
 
     usageMetrics.blockNumber = event.block.number;
     usageMetrics.timestamp = event.block.timestamp;
@@ -126,7 +132,11 @@ export function getOrCreateFinancialsDailySnapshot(
     financialMetrics.protocol = protocol.id;
 
     financialMetrics.totalValueLockedUSD = BIGDECIMAL_ZERO;
+<<<<<<< HEAD
     financialMetrics.protocolControlledValueUSD = null;
+=======
+    financialMetrics.protocolControlledValueUSD = null
+>>>>>>> b5219fd (Squashed All)
 
     financialMetrics.cumulativeSupplySideRevenueUSD =
       protocol.cumulativeSupplySideRevenueUSD;
@@ -160,12 +170,15 @@ export function getOrCreateVaultDailySnapshot(
     snapshot.protocol = REGISTRY_ADDRESS_MAP.get(dataSource.network())!.toHex();
     snapshot.vault = event.address.toHex();
     snapshot.totalValueLockedUSD = BigDecimal.zero();
+<<<<<<< HEAD
     snapshot.cumulativeSupplySideRevenueUSD = BigDecimal.zero();
     snapshot.dailySupplySideRevenueUSD = BigDecimal.zero();
     snapshot.cumulativeProtocolSideRevenueUSD = BigDecimal.zero();
     snapshot.dailyProtocolSideRevenueUSD = BigDecimal.zero();
     snapshot.cumulativeTotalRevenueUSD = BigDecimal.zero();
     snapshot.dailyTotalRevenueUSD = BigDecimal.zero();
+=======
+>>>>>>> b5219fd (Squashed All)
     snapshot.inputTokenBalance = BIGINT_ZERO;
     snapshot.outputTokenSupply = BIGINT_ZERO;
     snapshot.outputTokenPriceUSD = BigDecimal.zero();
@@ -195,12 +208,15 @@ export function getOrCreateVaultHourlySnapshot(
     snapshot.protocol = REGISTRY_ADDRESS_MAP.get(dataSource.network())!.toHex();
     snapshot.vault = event.address.toHex();
     snapshot.totalValueLockedUSD = BigDecimal.zero();
+<<<<<<< HEAD
     snapshot.cumulativeSupplySideRevenueUSD = BigDecimal.zero();
     snapshot.hourlySupplySideRevenueUSD = BigDecimal.zero();
     snapshot.cumulativeProtocolSideRevenueUSD = BigDecimal.zero();
     snapshot.hourlyProtocolSideRevenueUSD = BigDecimal.zero();
     snapshot.cumulativeTotalRevenueUSD = BigDecimal.zero();
     snapshot.hourlyTotalRevenueUSD = BigDecimal.zero();
+=======
+>>>>>>> b5219fd (Squashed All)
     snapshot.inputTokenBalance = BIGINT_ZERO;
     snapshot.outputTokenSupply = BIGINT_ZERO;
     snapshot.outputTokenPriceUSD = BigDecimal.zero();
@@ -241,7 +257,10 @@ export function getOrCreateYieldAggregator(
     protocol.cumulativeProtocolSideRevenueUSD = BigDecimal.zero();
     protocol.cumulativeTotalRevenueUSD = BigDecimal.zero();
     protocol.cumulativeUniqueUsers = INT_ZERO;
+<<<<<<< HEAD
     protocol.totalPoolCount = INT_ZERO;
+=======
+>>>>>>> b5219fd (Squashed All)
     protocol.save();
   }
   return protocol;

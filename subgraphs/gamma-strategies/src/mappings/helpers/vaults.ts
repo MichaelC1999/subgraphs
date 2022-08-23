@@ -19,11 +19,18 @@ import {
   getOrCreateVaultDailySnapshot,
   getOrCreateVaultHourlySnapshot,
 } from "../../common/getters";
+<<<<<<< HEAD
 import { incrementTotalPoolCount } from "./usageMetrics";
 
 // Update daily and hourly snapshots from vault entity
 export function updateVaultSnapshots(event: ethereum.Event): void {
   let vault = getOrCreateVault(event.address, event);
+=======
+
+// Update daily and hourly snapshots from vault entity
+export function updateVaultSnapshots(event: ethereum.Event): void {
+  let vault = getOrCreateVault(event.address, event.block);
+>>>>>>> b5219fd (Squashed All)
 
   let dailySnapshot = getOrCreateVaultDailySnapshot(event);
   let hourlySnapshot = getOrCreateVaultHourlySnapshot(event);
@@ -31,11 +38,14 @@ export function updateVaultSnapshots(event: ethereum.Event): void {
   dailySnapshot.inputTokenBalance = vault.inputTokenBalance;
   dailySnapshot.outputTokenSupply = vault.outputTokenSupply!;
   dailySnapshot.totalValueLockedUSD = vault.totalValueLockedUSD;
+<<<<<<< HEAD
   dailySnapshot.cumulativeSupplySideRevenueUSD =
     vault.cumulativeSupplySideRevenueUSD;
   dailySnapshot.cumulativeProtocolSideRevenueUSD =
     vault.cumulativeProtocolSideRevenueUSD;
   dailySnapshot.cumulativeTotalRevenueUSD = vault.cumulativeTotalRevenueUSD;
+=======
+>>>>>>> b5219fd (Squashed All)
   dailySnapshot.outputTokenPriceUSD = vault.outputTokenPriceUSD!;
   dailySnapshot.blockNumber = event.block.number;
   dailySnapshot.timestamp = event.block.timestamp;
@@ -43,11 +53,14 @@ export function updateVaultSnapshots(event: ethereum.Event): void {
   hourlySnapshot.inputTokenBalance = vault.inputTokenBalance;
   hourlySnapshot.outputTokenSupply = vault.outputTokenSupply!;
   hourlySnapshot.totalValueLockedUSD = vault.totalValueLockedUSD;
+<<<<<<< HEAD
   hourlySnapshot.cumulativeSupplySideRevenueUSD =
     vault.cumulativeSupplySideRevenueUSD;
   hourlySnapshot.cumulativeProtocolSideRevenueUSD =
     vault.cumulativeProtocolSideRevenueUSD;
   hourlySnapshot.cumulativeTotalRevenueUSD = vault.cumulativeTotalRevenueUSD;
+=======
+>>>>>>> b5219fd (Squashed All)
   hourlySnapshot.outputTokenPriceUSD = vault.outputTokenPriceUSD!;
   hourlySnapshot.blockNumber = event.block.number;
   hourlySnapshot.timestamp = event.block.timestamp;
@@ -58,7 +71,11 @@ export function updateVaultSnapshots(event: ethereum.Event): void {
 
 export function getOrCreateVault(
   vaultAddress: Address,
+<<<<<<< HEAD
   event: ethereum.Event
+=======
+  block: ethereum.Block
+>>>>>>> b5219fd (Squashed All)
 ): Vault {
   let vaultId = vaultAddress.toHex();
   let vault = Vault.load(vaultId);
@@ -77,12 +94,18 @@ export function getOrCreateVault(
     vault.outputToken = vaultId;
     vault.rewardTokens = null;
     vault.depositLimit = BIGINT_MAX.minus(BIGINT_ONE);
+<<<<<<< HEAD
     vault.createdTimestamp = event.block.timestamp;
     vault.createdBlockNumber = event.block.number;
     vault.totalValueLockedUSD = BigDecimal.zero();
     vault.cumulativeSupplySideRevenueUSD = BigDecimal.zero();
     vault.cumulativeProtocolSideRevenueUSD = BigDecimal.zero();
     vault.cumulativeTotalRevenueUSD = BigDecimal.zero();
+=======
+    vault.createdTimestamp = block.timestamp;
+    vault.createdBlockNumber = block.number;
+    vault.totalValueLockedUSD = BigDecimal.zero();
+>>>>>>> b5219fd (Squashed All)
     vault.inputTokenBalance = BIGINT_ZERO;
     vault.outputTokenSupply = BIGINT_ZERO;
     vault.outputTokenPriceUSD = BigDecimal.zero();
@@ -97,9 +120,12 @@ export function getOrCreateVault(
       vaultId
     );
     vault.fees = [vaultPerformanceFee.id];
+<<<<<<< HEAD
 
     incrementTotalPoolCount(event);
 
+=======
+>>>>>>> b5219fd (Squashed All)
     vault.save();
   }
   return vault;

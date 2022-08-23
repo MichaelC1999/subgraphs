@@ -195,7 +195,10 @@ export function handlePoolRegistered(event: PoolRegistered): void {
 
 export function handleMarketEntered(event: MarketEntered): void {
   _handleMarketEntered(
+<<<<<<< HEAD
     Address.fromString(FACTORY_CONTRACT),
+=======
+>>>>>>> b5219fd (Squashed All)
     event.params.cToken.toHexString(),
     event.params.account.toHexString(),
     true
@@ -204,7 +207,10 @@ export function handleMarketEntered(event: MarketEntered): void {
 
 export function handleMarketExited(event: MarketExited): void {
   _handleMarketEntered(
+<<<<<<< HEAD
     Address.fromString(FACTORY_CONTRACT),
+=======
+>>>>>>> b5219fd (Squashed All)
     event.params.cToken.toHexString(),
     event.params.account.toHexString(),
     false
@@ -568,7 +574,11 @@ export function handleAccrueInterest(event: AccrueInterest): void {
     event.block.timestamp,
     trollerAddr,
     blocksPerDayBD,
+<<<<<<< HEAD
     PROTOCOL_NETWORK.toLowerCase() == Network.ARBITRUM_ONE.toLowerCase() ? true : false // update all prices if network is arbitrum
+=======
+    PROTOCOL_NETWORK == Network.ARBITRUM_ONE ? true : false // update all prices if network is arbitrum
+>>>>>>> b5219fd (Squashed All)
   );
   updateProtocol(Address.fromString(FACTORY_CONTRACT));
 
@@ -686,9 +696,16 @@ function updateMarket(
     return;
   }
 
+<<<<<<< HEAD
   if (updateMarketPrices) {
     updateAllMarketPrices(comptroller, blockNumber);
   }
+=======
+  // TODO: commented out until updateMarketPrices() is added into all comp forks
+  // if (updateMarketPrices) {
+  //   updateAllMarketPrices(comptroller, blockNumber);
+  // }
+>>>>>>> b5219fd (Squashed All)
 
   // update this market's price no matter what
   // grab price of ETH then multiply by underlying price
@@ -810,7 +827,12 @@ function updateMarket(
   market.totalValueLockedUSD = underlyingSupplyUSD;
   market.totalDepositBalanceUSD = underlyingSupplyUSD;
 
+<<<<<<< HEAD
   market._borrowBalance = newTotalBorrow;
+=======
+  // TODO: commented out until updateMarketPrices() is added into all comp forks
+  // market._borrowBalance = newTotalBorrow;
+>>>>>>> b5219fd (Squashed All)
   market.totalBorrowBalanceUSD = newTotalBorrow
     .toBigDecimal()
     .div(exponentToBigDecimal(underlyingToken.decimals))
@@ -1006,10 +1028,17 @@ function updateRewards(
           .toBigDecimal()
           .div(exponentToBigDecimal(token.decimals));
         let rewardsPerDay = supplyRewardsBD.times(blocksPerDay);
+<<<<<<< HEAD
         distributorRewards[1] = BigInt.fromString(
           rewardsPerDay.truncate(0).toString()
         );
         distributorRewardsUSD[1] = rewardsPerDay.times(rewardTokenPriceUSD);
+=======
+        rewardEmissions[1] = BigInt.fromString(
+          rewardsPerDay.truncate(0).toString()
+        );
+        rewardEmissionsUSD[1] = rewardsPerDay.times(rewardTokenPriceUSD);
+>>>>>>> b5219fd (Squashed All)
 
         // create supply reward token
         let rewardTokenId = RewardTokenType.DEPOSIT + "-" + token.id;
@@ -1020,7 +1049,11 @@ function updateRewards(
           rewardToken.type = RewardTokenType.DEPOSIT;
           rewardToken.save();
         }
+<<<<<<< HEAD
         distributorTokens[1] = rewardToken.id;
+=======
+        rewardTokens[1] = rewardToken.id;
+>>>>>>> b5219fd (Squashed All)
       }
     }
 
@@ -1037,6 +1070,7 @@ function updateRewards(
   market.save();
 }
 
+<<<<<<< HEAD
 function updateAllMarketPrices(
   comptrollerAddr: Address,
   blockNumber: BigInt
@@ -1101,3 +1135,70 @@ function updateAllMarketPrices(
     market.save();
   }
 }
+=======
+// TODO: commented out until updateMarketPrices() is added into all comp forks
+// function updateAllMarketPrices(
+//   comptrollerAddr: Address,
+//   blockNumber: BigInt
+// ): void {
+//   let protocol = LendingProtocol.load(comptrollerAddr.toHexString());
+//   if (!protocol) {
+//     log.warning("[updateAllMarketPrices] protocol not found: {}", [
+//       comptrollerAddr.toHexString(),
+//     ]);
+//     return;
+//   }
+//   let priceOracle = PriceOracle.bind(Address.fromString(protocol._priceOracle));
+
+//   for (let i = 0; i < protocol._marketIDs.length; i++) {
+//     let market = Market.load(protocol._marketIDs[i]);
+//     if (!market) {
+//       break;
+//     }
+//     let underlyingToken = Token.load(market.inputToken);
+//     if (!underlyingToken) {
+//       break;
+//     }
+
+//     // update market price
+//     let customETHPrice = getUsdPricePerToken(Address.fromString(ETH_ADDRESS));
+//     let ethPriceUSD = customETHPrice.usdPrice.div(
+//       customETHPrice.decimalsBaseTen
+//     );
+//     let tryUnderlyingPrice = priceOracle.try_getUnderlyingPrice(
+//       Address.fromString(market.id)
+//     );
+
+//     let underlyingTokenPriceUSD: BigDecimal;
+//     if (tryUnderlyingPrice.reverted) {
+//       break;
+//     } else {
+//       let mantissaDecimalFactor = 18 - underlyingToken.decimals + 18;
+//       let bdFactor = exponentToBigDecimal(mantissaDecimalFactor);
+//       let priceInEth = tryUnderlyingPrice.value.toBigDecimal().div(bdFactor);
+//       underlyingTokenPriceUSD = priceInEth.times(ethPriceUSD); // get price in USD
+//     }
+
+//     underlyingToken.lastPriceUSD = underlyingTokenPriceUSD;
+//     underlyingToken.lastPriceBlockNumber = blockNumber;
+//     underlyingToken.save();
+
+//     market.inputTokenPriceUSD = underlyingTokenPriceUSD;
+
+//     // update TVL, supplyUSD, borrowUSD
+//     market.totalDepositBalanceUSD = market.inputTokenBalance
+//       .toBigDecimal()
+//       .div(exponentToBigDecimal(underlyingToken.decimals))
+//       .times(underlyingTokenPriceUSD);
+//     market.totalBorrowBalanceUSD = market._borrowBalance
+//       .toBigDecimal()
+//       .div(exponentToBigDecimal(underlyingToken.decimals))
+//       .times(underlyingTokenPriceUSD);
+//     market.totalValueLockedUSD = market.inputTokenBalance
+//       .toBigDecimal()
+//       .div(exponentToBigDecimal(underlyingToken.decimals))
+//       .times(underlyingTokenPriceUSD);
+//     market.save();
+//   }
+// }
+>>>>>>> b5219fd (Squashed All)

@@ -86,7 +86,11 @@ export function Deposit(
   );
 
   let inputTokenAddress = Address.fromString(vault.inputToken);
+<<<<<<< HEAD
   let inputTokenPrice = getUsdPricePerToken(inputTokenAddress, block);
+=======
+  let inputTokenPrice = getUsdPricePerToken(inputTokenAddress);
+>>>>>>> b5219fd (Squashed All)
   let inputTokenDecimals = utils.getTokenDecimals(inputTokenAddress);
 
   if (constants.MISSING_POOLS_MAP.get(inputTokenAddress)) {
@@ -94,7 +98,11 @@ export function Deposit(
       inputTokenAddress
     )!;
 
+<<<<<<< HEAD
     inputTokenPrice = getUsdPricePerToken(poolTokenAddress, block);
+=======
+    inputTokenPrice = getUsdPricePerToken(poolTokenAddress);
+>>>>>>> b5219fd (Squashed All)
     inputTokenDecimals = utils.getTokenDecimals(poolTokenAddress);
   }
 

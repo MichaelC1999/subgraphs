@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import {
   Address,
   BigInt,
@@ -5,6 +6,9 @@ import {
   BigDecimal,
   dataSource,
 } from "@graphprotocol/graph-ts";
+=======
+import { Address, BigInt, log, BigDecimal } from "@graphprotocol/graph-ts";
+>>>>>>> b5219fd (Squashed All)
 // import from the generated at root in order to reuse methods from root
 import {
   ProtocolData,
@@ -35,7 +39,10 @@ import {
   exponentToBigDecimal,
   BIGDECIMAL_ZERO,
   SECONDS_PER_DAY,
+<<<<<<< HEAD
   Network,
+=======
+>>>>>>> b5219fd (Squashed All)
 } from "../../../src/constants";
 import {
   LendingProtocol,
@@ -113,7 +120,10 @@ export function handleNewPriceOracle(event: NewPriceOracle): void {
 
 export function handleMarketEntered(event: MarketEntered): void {
   _handleMarketEntered(
+<<<<<<< HEAD
     comptrollerAddr,
+=======
+>>>>>>> b5219fd (Squashed All)
     event.params.iToken.toHexString(),
     event.params.account.toHexString(),
     true
@@ -122,7 +132,10 @@ export function handleMarketEntered(event: MarketEntered): void {
 
 export function handleMarketExited(event: MarketExited): void {
   _handleMarketEntered(
+<<<<<<< HEAD
     comptrollerAddr,
+=======
+>>>>>>> b5219fd (Squashed All)
     event.params.iToken.toHexString(),
     event.params.account.toHexString(),
     false
@@ -419,7 +432,10 @@ export function handleUpdateInterest(event: AccrueInterest): void {
     comptrollerAddr,
     event.params.interestAccumulated,
     event.params.totalBorrows,
+<<<<<<< HEAD
     network.toLowerCase() == Network.MAINNET.toLowerCase() ? true : false,
+=======
+>>>>>>> b5219fd (Squashed All)
     event
   );
 }
@@ -649,7 +665,11 @@ function getOrCreateProtocol(): LendingProtocol {
     "dForce v2",
     "dforce-v2",
     "2.0.1",
+<<<<<<< HEAD
     "1.1.2",
+=======
+    "1.1.0",
+>>>>>>> b5219fd (Squashed All)
     "1.0.0",
     network,
     comptroller.try_liquidationIncentiveMantissa(),

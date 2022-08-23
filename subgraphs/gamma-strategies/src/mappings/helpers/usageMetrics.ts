@@ -1,10 +1,14 @@
 import { Address, dataSource, ethereum } from "@graphprotocol/graph-ts";
 import { Account, ActiveAccount } from "../../../generated/schema";
+<<<<<<< HEAD
 import {
   INT_ONE,
   REGISTRY_ADDRESS_MAP,
   UsageType,
 } from "../../common/constants";
+=======
+import { REGISTRY_ADDRESS_MAP, UsageType } from "../../common/constants";
+>>>>>>> b5219fd (Squashed All)
 import {
   getOrCreateUsageMetricDailySnapshot,
   getOrCreateUsageMetricHourlySnapshot,
@@ -66,13 +70,19 @@ export function updateUsageMetrics(
   dailyUsageSnapshot.timestamp = event.block.timestamp;
   dailyUsageSnapshot.dailyTransactionCount += 1;
   dailyUsageSnapshot.cumulativeUniqueUsers = cumulativeUniqueUsers;
+<<<<<<< HEAD
   dailyUsageSnapshot.totalPoolCount = protocol.totalPoolCount;
+=======
+>>>>>>> b5219fd (Squashed All)
 
   hourlyUsageSnapshot.blockNumber = event.block.number;
   hourlyUsageSnapshot.timestamp = event.block.timestamp;
   hourlyUsageSnapshot.hourlyTransactionCount += 1;
   hourlyUsageSnapshot.cumulativeUniqueUsers = cumulativeUniqueUsers;
+<<<<<<< HEAD
   // hourlyUsageSnapshot.totalPoolCount = protocol.totalPoolCount;
+=======
+>>>>>>> b5219fd (Squashed All)
 
   protocol.save();
   dailyUsageSnapshot.save();
@@ -133,6 +143,7 @@ export function createHourlyActiveAccount(
 
   return _createActiveAccount(hourlyAccountId);
 }
+<<<<<<< HEAD
 
 export function incrementTotalPoolCount(event: ethereum.Event): void {
   let protocol = getOrCreateYieldAggregator(
@@ -148,3 +159,5 @@ export function incrementTotalPoolCount(event: ethereum.Event): void {
   protocol.save();
   usageMetricsDaily.save();
 }
+=======
+>>>>>>> b5219fd (Squashed All)

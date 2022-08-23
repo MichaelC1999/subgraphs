@@ -1,6 +1,7 @@
 specVersion: 0.0.2
 schema:
   file: ./schema.graphql
+<<<<<<< HEAD
 {{#graftEnabled}}
 description: ...
 features:
@@ -9,6 +10,8 @@ graft:
   base: {{subgraphId}} # Subgraph ID of base subgraph
   block: {{graftStartBlock}} # Block number
 {{/graftEnabled}}
+=======
+>>>>>>> b5219fd (Squashed All)
 dataSources:
   - kind: ethereum/contract
     name: FusePoolDirectory

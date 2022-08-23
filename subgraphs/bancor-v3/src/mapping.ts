@@ -61,7 +61,10 @@ import {
   DaiAddr,
   EthAddr,
   exponentToBigDecimal,
+<<<<<<< HEAD
   exponentToBigInt,
+=======
+>>>>>>> b5219fd (Squashed All)
   hundredBD,
   LiquidityPoolFeeType,
   Network,
@@ -663,7 +666,11 @@ function getOrCreateProtocol(): DexAmmProtocol {
     protocol.name = "Bancor V3";
     protocol.slug = "bancor-v3";
     protocol.schemaVersion = "1.3.0";
+<<<<<<< HEAD
     protocol.subgraphVersion = "1.0.2";
+=======
+    protocol.subgraphVersion = "1.0.0";
+>>>>>>> b5219fd (Squashed All)
     protocol.methodologyVersion = "1.0.0";
     protocol.network = Network.MAINNET;
     protocol.type = ProtocolType.EXCHANGE;
@@ -911,6 +918,7 @@ function _handleTotalLiquidityUpdated(
   protocol.save();
 }
 
+<<<<<<< HEAD
 function getDaiAmount(
   sourceTokenID: string,
   sourceAmountMantissa: BigInt
@@ -951,6 +959,27 @@ function getTokenPriceUSD(token: string, decimals: i32): BigDecimal {
   return daiAmountMantissaResult.value
     .toBigDecimal()
     .div(exponentToBigDecimal(18));
+=======
+function getDaiAmount(sourceTokenID: string, sourceAmount: BigInt): BigDecimal {
+  if (sourceTokenID == DaiAddr) {
+    return sourceAmount.toBigDecimal().div(exponentToBigDecimal(18));
+  }
+  let info = BancorNetworkInfo.bind(Address.fromString(BancorNetworkInfoAddr));
+  let targetAmountResult = info.try_tradeOutputBySourceAmount(
+    Address.fromString(sourceTokenID),
+    Address.fromString(DaiAddr),
+    sourceAmount
+  );
+  if (targetAmountResult.reverted) {
+    log.warning(
+      "[getDaiAmount] try_tradeOutputBySourceAmount({}, {}, {}) reverted",
+      [sourceTokenID, DaiAddr, sourceAmount.toString()]
+    );
+    return zeroBD;
+  }
+  // dai.decimals = 18
+  return targetAmountResult.value.toBigDecimal().div(exponentToBigDecimal(18));
+>>>>>>> b5219fd (Squashed All)
 }
 
 function getReserveTokenAmount(
@@ -1227,12 +1256,21 @@ function updateLiquidityPoolSnapshotRevenue(
     blockTimestamp,
     blockNumber
   );
+<<<<<<< HEAD
   hourlySnapshot.hourlyTotalRevenueUSD =
     hourlySnapshot.hourlyTotalRevenueUSD.plus(revenue);
   hourlySnapshot.hourlyProtocolSideRevenueUSD =
     hourlySnapshot.hourlyProtocolSideRevenueUSD.plus(protocolSideRevenue);
   hourlySnapshot.hourlySupplySideRevenueUSD =
     hourlySnapshot.hourlySupplySideRevenueUSD.plus(supplySideRevenue);
+=======
+  hourlySnapshot.dailyTotalRevenueUSD =
+    dailySnapshot.dailyTotalRevenueUSD.plus(revenue);
+  hourlySnapshot.dailyProtocolSideRevenueUSD =
+    dailySnapshot.dailyProtocolSideRevenueUSD.plus(protocolSideRevenue);
+  hourlySnapshot.dailySupplySideRevenueUSD =
+    dailySnapshot.dailySupplySideRevenueUSD.plus(supplySideRevenue);
+>>>>>>> b5219fd (Squashed All)
   hourlySnapshot.save();
 }
 
@@ -1478,9 +1516,15 @@ function getOrCreateLiquidityPoolHourlySnapshot(
     snapshot.cumulativeTotalRevenueUSD = zeroBD;
     snapshot.cumulativeProtocolSideRevenueUSD = zeroBD;
     snapshot.cumulativeSupplySideRevenueUSD = zeroBD;
+<<<<<<< HEAD
     snapshot.hourlyTotalRevenueUSD = zeroBD;
     snapshot.hourlyProtocolSideRevenueUSD = zeroBD;
     snapshot.hourlySupplySideRevenueUSD = zeroBD;
+=======
+    snapshot.dailyTotalRevenueUSD = zeroBD;
+    snapshot.dailyProtocolSideRevenueUSD = zeroBD;
+    snapshot.dailySupplySideRevenueUSD = zeroBD;
+>>>>>>> b5219fd (Squashed All)
     snapshot.cumulativeVolumeUSD = zeroBD;
     snapshot.inputTokenBalances = [zeroBI];
     snapshot.inputTokenWeights = [zeroBD];

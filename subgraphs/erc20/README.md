@@ -1,6 +1,10 @@
 # ERC20 Token Subgraph
 
+<<<<<<< HEAD
 The subgraph reads ERC20 token list from IPFS, monitors the tokens' events and aggregates the results accordingly.
+=======
+The subgraph read erc20 token list from IPFS, monitor the tokens' event and aggregate the results accordingly.
+>>>>>>> b5219fd (Squashed All)
 
 ## Calculation Methodology v1.0.0
 
@@ -27,6 +31,7 @@ Total number of tokens transfered between accounts during a day via transfer tra
 ERC20 Token Standard
 
 - https://ethereum.org/en/developers/docs/standards/tokens/erc-20/
+<<<<<<< HEAD
 
 ## Building/Deployment
 ```bash
@@ -37,3 +42,5 @@ npm run build
 # Deploy
 npm run deploy --NETWORK=mainnet --YEAR=2022 --LOCATION=messari/erc20-holders-2022
 ```
+=======
+>>>>>>> b5219fd (Squashed All)

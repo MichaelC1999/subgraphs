@@ -20,11 +20,17 @@ import {
 } from "../../generated/schema";
 import * as utils from "./utils";
 import * as constants from "./constants";
+<<<<<<< HEAD
 import { getUsdPricePerToken } from "../prices";
 import { ERC20 as ERC20Contract } from "../../generated/Vault/ERC20";
 import { LiquidityPool as LiquidityPoolStore } from "../../generated/schema";
 import { WeightedPool as WeightedPoolContract } from "../../generated/templates/WeightedPool/WeightedPool";
 import { getRewardsPerDay } from "./rewards";
+=======
+import { ERC20 as ERC20Contract } from "../../generated/Vault/ERC20";
+import { LiquidityPool as LiquidityPoolStore } from "../../generated/schema";
+import { WeightedPool as WeightedPoolContract } from "../../generated/templates/WeightedPool/WeightedPool";
+>>>>>>> b5219fd (Squashed All)
 
 export function getOrCreateAccount(id: string): Account {
   let account = Account.load(id);
@@ -41,6 +47,7 @@ export function getOrCreateAccount(id: string): Account {
   return account;
 }
 
+<<<<<<< HEAD
 export function getOrCreateRewardToken(
   address: Address,
   RewardTokenType: string,
@@ -65,6 +72,16 @@ export function getOrCreateRewardToken(
         constants.INFLATION_INTERVAL
       );
     }
+=======
+export function getOrCreateRewardToken(address: Address): RewardToken {
+  let rewardToken = RewardToken.load(address.toHexString());
+
+  if (!rewardToken) {
+    rewardToken = new RewardToken(address.toHexString());
+    const token = getOrCreateToken(address);
+    rewardToken.token = token.id;
+    rewardToken.type = constants.RewardTokenType.DEPOSIT;
+>>>>>>> b5219fd (Squashed All)
 
     rewardToken.save();
   }
@@ -125,7 +142,11 @@ export function getOrCreateDexAmmProtocol(): DexAmmProtocol {
   return protocol;
 }
 
+<<<<<<< HEAD
 export function getOrCreateToken(address: Address, blockNumber: BigInt): Token {
+=======
+export function getOrCreateToken(address: Address): Token {
+>>>>>>> b5219fd (Squashed All)
   let token = Token.load(address.toHexString());
 
   if (!token) {
@@ -139,6 +160,7 @@ export function getOrCreateToken(address: Address, blockNumber: BigInt): Token {
       .readValue<BigInt>(contract.try_decimals(), constants.BIGINT_ZERO)
       .toI32();
 
+<<<<<<< HEAD
     let tokenPrice = getUsdPricePerToken(address);
     token.lastPriceUSD = tokenPrice.usdPrice.div(tokenPrice.decimalsBaseTen);
     token.lastPriceBlockNumber = blockNumber;
@@ -156,6 +178,8 @@ export function getOrCreateToken(address: Address, blockNumber: BigInt): Token {
     token.lastPriceUSD = tokenPrice.usdPrice.div(tokenPrice.decimalsBaseTen);
     token.lastPriceBlockNumber = blockNumber;
 
+=======
+>>>>>>> b5219fd (Squashed All)
     token.save();
   }
 
@@ -396,7 +420,11 @@ export function getOrCreateLiquidityPool(
     pool.inputTokenBalances = inputTokensInfo.getBalances;
     pool.inputTokenWeights = utils.getPoolTokenWeights(poolAddress);
 
+<<<<<<< HEAD
     pool.outputToken = getOrCreateToken(poolAddress, block.number).id;
+=======
+    pool.outputToken = getOrCreateToken(poolAddress).id;
+>>>>>>> b5219fd (Squashed All)
     pool.outputTokenSupply = constants.BIGINT_ZERO;
     pool.outputTokenPriceUSD = constants.BIGDECIMAL_ZERO;
 

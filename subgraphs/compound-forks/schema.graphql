@@ -657,9 +657,12 @@ type Market @entity {
   ### Add-Ons ###
 
   _reserveFactor: BigDecimal!
+<<<<<<< HEAD
 
   " The amount of borrowed asset in underlying "
   _borrowBalance: BigInt!
+=======
+>>>>>>> b5219fd (Squashed All)
 }
 
 #################################

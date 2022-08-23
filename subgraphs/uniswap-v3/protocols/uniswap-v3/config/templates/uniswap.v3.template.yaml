@@ -13,7 +13,11 @@ dataSources:
     name: Factory
     network: {{network}}
     source:
+<<<<<<< HEAD
       address: "{{factoryAddress}}"
+=======
+      address: "0x1F98431c8aD98523631AE4a59f267346ea31F984"
+>>>>>>> b5219fd (Squashed All)
       abi: Factory
       startBlock: {{startBlock}}
     mapping:

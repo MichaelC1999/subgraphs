@@ -48,7 +48,10 @@ import {
   SECONDS_PER_DAY,
   SECONDS_PER_HOUR,
 } from "./constants";
+<<<<<<< HEAD
 import { PriceOracle } from "../generated/templates/CToken/PriceOracle";
+=======
+>>>>>>> b5219fd (Squashed All)
 
 enum EventType {
   Deposit,
@@ -192,11 +195,15 @@ export function _handleActionPaused(
 }
 
 export function _handleMarketEntered(
+<<<<<<< HEAD
   comptrollerAddr: Address,
+=======
+>>>>>>> b5219fd (Squashed All)
   marketID: string,
   borrowerID: string,
   entered: boolean // true = entered, false = exited
 ): void {
+<<<<<<< HEAD
   let protocol = LendingProtocol.load(comptrollerAddr.toHexString());
   if (!protocol) {
     log.warning("[handleMint] protocol not found: {}", [
@@ -205,6 +212,8 @@ export function _handleMarketEntered(
     return;
   }
 
+=======
+>>>>>>> b5219fd (Squashed All)
   let market = Market.load(marketID);
   if (!market) {
     log.warning("[_handleMarketEntered] market {} not found", [marketID]);
@@ -214,9 +223,12 @@ export function _handleMarketEntered(
   let account = Account.load(borrowerID);
   if (!account) {
     account = createAccount(borrowerID);
+<<<<<<< HEAD
 
     protocol.cumulativeUniqueUsers++;
     protocol.save();
+=======
+>>>>>>> b5219fd (Squashed All)
   }
 
   let enabledCollaterals = account._enabledCollaterals;
@@ -345,7 +357,10 @@ export function _handleMarketListed(
   market.closedPositionCount = 0;
   market.lendingPositionCount = 0;
   market.borrowingPositionCount = 0;
+<<<<<<< HEAD
   market._borrowBalance = BIGINT_ZERO;
+=======
+>>>>>>> b5219fd (Squashed All)
 
   market.save();
 
@@ -399,13 +414,18 @@ export function _handleMint(
     account = createAccount(minter.toHexString());
     account.save();
 
+<<<<<<< HEAD
     protocol.cumulativeUniqueUsers++;
+=======
+    protocol.cumulativeUniqueUsers += 1;
+>>>>>>> b5219fd (Squashed All)
     protocol.save();
   }
   account.depositCount += 1;
   account.save();
 
   //
+<<<<<<< HEAD
   // track unique depositors
   //
   let depositorActorID = "depositor".concat("-").concat(account.id);
@@ -419,6 +439,8 @@ export function _handleMint(
   }
 
   //
+=======
+>>>>>>> b5219fd (Squashed All)
   // update position
   //
   let positionID = addPosition(
@@ -514,7 +536,11 @@ export function _handleRedeem(
     account = createAccount(redeemer.toHexString());
     account.save();
 
+<<<<<<< HEAD
     protocol.cumulativeUniqueUsers++;
+=======
+    protocol.cumulativeUniqueUsers += 1;
+>>>>>>> b5219fd (Squashed All)
     protocol.save();
   }
   account.withdrawCount += 1;
@@ -610,12 +636,17 @@ export function _handleBorrow(
     account = createAccount(borrower.toHexString());
     account.save();
 
+<<<<<<< HEAD
     protocol.cumulativeUniqueUsers++;
+=======
+    protocol.cumulativeUniqueUsers += 1;
+>>>>>>> b5219fd (Squashed All)
     protocol.save();
   }
   account.borrowCount += 1;
   account.save();
 
+<<<<<<< HEAD
   //
   // track unique borrowers
   //
@@ -632,6 +663,8 @@ export function _handleBorrow(
   //
   // update position
   //
+=======
+>>>>>>> b5219fd (Squashed All)
   let positionID = addPosition(
     protocol,
     market,
@@ -723,7 +756,11 @@ export function _handleRepayBorrow(
     payerAccount = createAccount(payer.toHexString());
     payerAccount.save();
 
+<<<<<<< HEAD
     protocol.cumulativeUniqueUsers++;
+=======
+    protocol.cumulativeUniqueUsers += 1;
+>>>>>>> b5219fd (Squashed All)
     protocol.save();
   }
   payerAccount.repayCount += 1;
@@ -734,7 +771,11 @@ export function _handleRepayBorrow(
     borrowerAccount = createAccount(borrower.toHexString());
     borrowerAccount.save();
 
+<<<<<<< HEAD
     protocol.cumulativeUniqueUsers++;
+=======
+    protocol.cumulativeUniqueUsers += 1;
+>>>>>>> b5219fd (Squashed All)
     protocol.save();
   }
 
@@ -868,7 +909,11 @@ export function _handleLiquidateBorrow(
     liquidatorAccount = createAccount(liquidatorAccountID);
     liquidatorAccount.save();
 
+<<<<<<< HEAD
     protocol.cumulativeUniqueUsers++;
+=======
+    protocol.cumulativeUniqueUsers += 1;
+>>>>>>> b5219fd (Squashed All)
     protocol.save();
   }
   let liquidatorActorID = "liquidator".concat("-").concat(liquidatorAccountID);
@@ -887,7 +932,11 @@ export function _handleLiquidateBorrow(
     liquidateeAccount = createAccount(liquidateeAccountID);
     liquidateeAccount.save();
 
+<<<<<<< HEAD
     protocol.cumulativeUniqueUsers++;
+=======
+    protocol.cumulativeUniqueUsers += 1;
+>>>>>>> b5219fd (Squashed All)
     protocol.save();
   }
   let liquidateeActorID = "liquidatee".concat("-").concat(liquidateeAccountID);
@@ -989,7 +1038,10 @@ export function _handleAccrueInterest(
   comptrollerAddr: Address,
   interestAccumulated: BigInt,
   totalBorrows: BigInt,
+<<<<<<< HEAD
   updateMarketPrices: boolean,
+=======
+>>>>>>> b5219fd (Squashed All)
   event: ethereum.Event
 ): void {
   let marketID = event.address.toHexString();
@@ -1025,9 +1077,13 @@ export function _handleAccrueInterest(
     interestAccumulated,
     totalBorrows,
     event.block.number,
+<<<<<<< HEAD
     event.block.timestamp,
     updateMarketPrices,
     comptrollerAddr
+=======
+    event.block.timestamp
+>>>>>>> b5219fd (Squashed All)
   );
   updateProtocol(comptrollerAddr);
 
@@ -1405,16 +1461,23 @@ function updateMarketSnapshots(
   marketDailySnapshot.save();
 }
 
+<<<<<<< HEAD
 // updateMarketPrices: true when every market price is updated on AccrueInterest()
+=======
+>>>>>>> b5219fd (Squashed All)
 export function updateMarket(
   updateMarketData: UpdateMarketData,
   marketID: string,
   interestAccumulatedMantissa: BigInt,
   newTotalBorrow: BigInt,
   blockNumber: BigInt,
+<<<<<<< HEAD
   blockTimestamp: BigInt,
   updateMarketPrices: boolean,
   comptrollerAddress: Address
+=======
+  blockTimestamp: BigInt
+>>>>>>> b5219fd (Squashed All)
 ): void {
   let market = Market.load(marketID);
   if (!market) {
@@ -1430,11 +1493,14 @@ export function updateMarket(
     return;
   }
 
+<<<<<<< HEAD
   if (updateMarketPrices) {
     updateAllMarketPrices(comptrollerAddress, blockNumber);
   }
 
   // update this market's price no matter what
+=======
+>>>>>>> b5219fd (Squashed All)
   let underlyingTokenPriceUSD = getTokenPriceUSD(
     updateMarketData.getUnderlyingPriceResult,
     underlyingToken.decimals
@@ -1525,7 +1591,10 @@ export function updateMarket(
   market.totalValueLockedUSD = underlyingSupplyUSD;
   market.totalDepositBalanceUSD = underlyingSupplyUSD;
 
+<<<<<<< HEAD
   market._borrowBalance = newTotalBorrow;
+=======
+>>>>>>> b5219fd (Squashed All)
   market.totalBorrowBalanceUSD = newTotalBorrow
     .toBigDecimal()
     .div(exponentToBigDecimal(underlyingToken.decimals))
@@ -1827,7 +1896,13 @@ export function getOrCreateMarketDailySnapshot(
   blockTimestamp: BigInt,
   blockNumber: BigInt
 ): MarketDailySnapshot {
+<<<<<<< HEAD
   let snapshotID = getMarketDailySnapshotID(market.id, blockTimestamp.toI32());
+=======
+  let snapshotID = `${market.id}-${(
+    blockTimestamp.toI32() / SECONDS_PER_DAY
+  ).toString()}`;
+>>>>>>> b5219fd (Squashed All)
   let snapshot = MarketDailySnapshot.load(snapshotID);
   if (!snapshot) {
     snapshot = new MarketDailySnapshot(snapshotID);
@@ -1880,7 +1955,13 @@ export function getOrCreateMarketHourlySnapshot(
   blockTimestamp: BigInt,
   blockNumber: BigInt
 ): MarketHourlySnapshot {
+<<<<<<< HEAD
   let snapshotID = getMarketHourlySnapshotID(market.id, blockTimestamp.toI32());
+=======
+  let snapshotID = `${market.id}-${(
+    blockTimestamp.toI32() / SECONDS_PER_HOUR
+  ).toString()}`;
+>>>>>>> b5219fd (Squashed All)
   let snapshot = MarketHourlySnapshot.load(snapshotID);
   if (!snapshot) {
     snapshot = new MarketHourlySnapshot(snapshotID);
@@ -2040,7 +2121,31 @@ function addPosition(
     //
     protocol.cumulativePositionCount += 1;
     protocol.openPositionCount += 1;
+<<<<<<< HEAD
     protocol.save();
+=======
+    if (eventType == EventType.Deposit) {
+      let depositorActorID = "depositor".concat("-").concat(account.id);
+      let depositorActor = _ActorAccount.load(depositorActorID);
+      if (!depositorActor) {
+        depositorActor = new _ActorAccount(depositorActorID);
+        depositorActor.save();
+
+        protocol.cumulativeUniqueDepositors += 1;
+        protocol.save();
+      }
+    } else if (eventType == EventType.Borrow) {
+      let borrowerActorID = "borrower".concat("-").concat(account.id);
+      let borrowerActor = _ActorAccount.load(borrowerActorID);
+      if (!borrowerActor) {
+        borrowerActor = new _ActorAccount(borrowerActorID);
+        borrowerActor.save();
+
+        protocol.cumulativeUniqueBorrowers += 1;
+        protocol.save();
+      }
+    }
+>>>>>>> b5219fd (Squashed All)
   }
 
   //
@@ -2211,6 +2316,7 @@ function snapshotPosition(position: Position, event: ethereum.Event): void {
   snapshot.timestamp = event.block.timestamp;
   snapshot.save();
 }
+<<<<<<< HEAD
 
 //
 //
@@ -2267,3 +2373,5 @@ export function updateAllMarketPrices(
     market.save();
   }
 }
+=======
+>>>>>>> b5219fd (Squashed All)

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Balancer Forks
 
 ## Rewards
@@ -24,6 +25,9 @@
   - Uses the same logic for liquidity pools as Balancer V2, however it uses a separate mechanism for rewards. Instead of using Gauges, it uses the MasterChef V2 contract.
 - Optimism
   - Again, uses the same logic for liquidity pools as Balancer V2, and it shares the same reward mechanisms as Balancer V2 on Arbitrum and Polygon.
+=======
+# Balancer v2 Subgraph
+>>>>>>> b5219fd (Squashed All)
 
 ## Calculation Methodology v1.0.0
 
@@ -71,7 +75,10 @@ Count of Unique Addresses which have interacted with the protocol via any transa
 `Withdraws`
 
 ### Reward Token Emissions Amount
+<<<<<<< HEAD
 
+=======
+>>>>>>> b5219fd (Squashed All)
 Note: Currently, 145,000 BAL tokens, or approximately 7.5M per year, are distributed every week through the Liquidity Mining program.
 
 ### Protocol Controlled Value

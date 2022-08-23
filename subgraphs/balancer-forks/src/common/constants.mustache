@@ -101,6 +101,7 @@ export namespace Protocol {
   export const METHODOLOGY_VERSION = "1.0.0";
 }
 
+<<<<<<< HEAD
 export namespace MasterChef {
   export const MINICHEF = "MINICHEF";
   export const MASTERCHEF = "MASTERCHEF";
@@ -108,15 +109,20 @@ export namespace MasterChef {
   export const MASTERCHEFV3 = "MASTERCHEFV3";
 }
 
+=======
+>>>>>>> b5219fd (Squashed All)
 export const SECONDS_PER_HOUR = 60 * 60;
 export const SECONDS_PER_DAY = 60 * 60 * 24;
 export const MAX_BPS = BigInt.fromI32(10000);
 export const DEFAULT_DECIMALS = BigInt.fromI32(18);
 
+<<<<<<< HEAD
 export const INT_ZERO = 0 as i32;
 export const INT_ONE = 1 as i32;
 
 export const BIGINT_NEG_ONE = BigInt.fromI32(-1);
+=======
+>>>>>>> b5219fd (Squashed All)
 export const BIGINT_ZERO = BigInt.fromI32(0);
 export const BIGINT_ONE = BigInt.fromI32(1);
 export const BIGINT_TEN = BigInt.fromI32(10);
@@ -124,23 +130,42 @@ export const BIGINT_HUNDRED = BigInt.fromI32(100);
 export const BIGINT_NEGATIVE_ONE = BigInt.fromString("-1");
 
 export const BIGDECIMAL_ZERO = new BigDecimal(BIGINT_ZERO);
+<<<<<<< HEAD
 export const BIGDECIMAL_ONE = new BigDecimal(BIGINT_ONE);
 export const BIGDECIMAL_TEN = new BigDecimal(BIGINT_TEN);
+=======
+>>>>>>> b5219fd (Squashed All)
 export const BIGDECIMAL_HUNDRED = BigDecimal.fromString("100");
 export const BIGDECIMAL_NEGATIVE_ONE = BigDecimal.fromString("-1");
 export const BIGDECIMAL_POINT_FOUR = BigDecimal.fromString("0.4");
 
+<<<<<<< HEAD
 export const DEFAULT_DECIMALS_DENOMINATOR = BigDecimal.fromString("1000000000000000000");
 export const FEE_DENOMINATOR = DEFAULT_DECIMALS_DENOMINATOR;
+=======
+export const FEE_DENOMINATOR = BigDecimal.fromString("1000000000000000000");
+>>>>>>> b5219fd (Squashed All)
 
 export const USDC_DECIMALS = 6;
 export const USDC_DENOMINATOR = BigDecimal.fromString("1000000");
 
+<<<<<<< HEAD
 export const ETH_AVERAGE_BLOCK_PER_HOUR = BigInt.fromI32(3756);
 
 /////////////////////////////////////
 ///// Protocol/Network Specific /////
 /////////////////////////////////////
+=======
+export const WEEKLY_BAL_EMISSIONS = BigDecimal.fromString("145000");
+export const DAILY_BAL_EMISSIONS = WEEKLY_BAL_EMISSIONS.div(
+  BigDecimal.fromString("7")
+);
+
+
+/////////////////////////////
+///// Protocol Specific /////
+/////////////////////////////
+>>>>>>> b5219fd (Squashed All)
 
 export const VAULT_ADDRESS = Address.fromString(
   "{{vaultAddress}}"
@@ -148,12 +173,20 @@ export const VAULT_ADDRESS = Address.fromString(
 export const PROTOCOL_FEES_COLLECTOR_ADDRESS = Address.fromString(
   "{{protocolFeesCollectorAddress}}"
 );
+<<<<<<< HEAD
 export const PROTOCOL_TOKEN_ADDRESS = Address.fromString(
   "{{protocolTokenAddress}}"
+=======
+export const BALANCER_TOKEN_ADDRESS = Address.fromString(
+  "{{balancerAddress}}"
+>>>>>>> b5219fd (Squashed All)
 );
 export const GAUGE_CONTROLLER_ADDRESS = Address.fromString(
   "{{gaugeControllerAddress}}"
 );
+<<<<<<< HEAD
 
 export const INFLATION_INTERVAL = "{{inflationInterval}}";
 export const STARTING_INFLATION_RATE = BigDecimal.fromString(({{protocolTokenStartingInflationPerIntervalUnit}}).toString()).times(DEFAULT_DECIMALS_DENOMINATOR);
+=======
+>>>>>>> b5219fd (Squashed All)

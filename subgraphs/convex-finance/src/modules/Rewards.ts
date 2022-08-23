@@ -178,7 +178,11 @@ export function updateRewardTokenEmissions(
   }
   let rewardTokenEmissionsUSD = vault.rewardTokenEmissionsUSD!;
 
+<<<<<<< HEAD
   const rewardTokenPrice = getUsdPricePerToken(rewardTokenAddress, block);
+=======
+  const rewardTokenPrice = getUsdPricePerToken(rewardTokenAddress);
+>>>>>>> b5219fd (Squashed All)
   const rewardTokenDecimals = utils.getTokenDecimals(rewardTokenAddress);
 
   rewardTokenEmissionsAmount[rewardTokenIndex] = rewardTokenPerDay;

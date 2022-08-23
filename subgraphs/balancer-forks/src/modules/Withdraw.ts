@@ -16,6 +16,10 @@ import {
   getOrCreateUsageMetricsHourlySnapshot,
 } from "../common/initializers";
 import * as utils from "../common/utils";
+<<<<<<< HEAD
+=======
+import { getUsdPricePerToken } from "../prices";
+>>>>>>> b5219fd (Squashed All)
 import * as constants from "../common/constants";
 import { updateRevenueSnapshots } from "./Revenue";
 import { WeightedPool as WeightedPoolContract } from "../../generated/templates/WeightedPool/WeightedPool";
@@ -83,8 +87,12 @@ export function UpdateMetricsAfterWithdraw(block: ethereum.Block): void {
 
 export function getRemoveLiquidityFeesUSD(
   inputTokens: string[],
+<<<<<<< HEAD
   fees: BigInt[],
   blockNumber: BigInt
+=======
+  fees: BigInt[]
+>>>>>>> b5219fd (Squashed All)
 ): BigDecimal {
   if (fees.length == 0) {
     return constants.BIGDECIMAL_ZERO;
@@ -94,6 +102,7 @@ export function getRemoveLiquidityFeesUSD(
   for (let idx = 0; idx < inputTokens.length; idx++) {
     if (fees.at(idx) == constants.BIGINT_ZERO) continue;
 
+<<<<<<< HEAD
     let inputToken = utils.getOrCreateTokenFromString(
       inputTokens.at(idx),
       blockNumber
@@ -105,6 +114,17 @@ export function getRemoveLiquidityFeesUSD(
         constants.BIGINT_TEN.pow(inputToken.decimals as u8).toBigDecimal()
       )
       .times(inputToken.lastPriceUSD!);
+=======
+    let inputToken = Address.fromString(inputTokens.at(idx));
+    let inputTokenPrice = getUsdPricePerToken(inputToken);
+    let inputTokenDecimals = utils.getTokenDecimals(inputToken);
+
+    let inputTokenFee = fees
+      .at(idx)
+      .divDecimal(inputTokenDecimals)
+      .times(inputTokenPrice.usdPrice)
+      .div(inputTokenPrice.decimalsBaseTen);
+>>>>>>> b5219fd (Squashed All)
 
     totalFeesUSD = totalFeesUSD.plus(inputTokenFee);
   }
@@ -132,12 +152,22 @@ export function Withdraw(
   let withdrawAmountUSD = constants.BIGDECIMAL_ZERO;
 
   for (let idx = 0; idx < withdrawnTokenAmounts.length; idx++) {
+<<<<<<< HEAD
     let inputToken = utils.getOrCreateTokenFromString(
       pool.inputTokens[idx],
       block.number
     );
     let inputTokenIndex = pool.inputTokens.indexOf(inputToken.id);
 
+=======
+    let inputToken = utils.getOrCreateTokenFromString(pool.inputTokens[idx]);
+    let inputTokenIndex = pool.inputTokens.indexOf(inputToken.id);
+
+    let inputTokenAddress = Address.fromString(inputToken.id);
+    let inputTokenPrice = getUsdPricePerToken(inputTokenAddress);
+    let inputTokenDecimals = utils.getTokenDecimals(inputTokenAddress);
+
+>>>>>>> b5219fd (Squashed All)
     inputTokenBalances[inputTokenIndex] = inputTokenBalances[
       inputTokenIndex
     ].minus(withdrawnTokenAmounts[idx].minus(fees[idx]));
@@ -146,10 +176,16 @@ export function Withdraw(
 
     withdrawAmountUSD = withdrawAmountUSD.plus(
       withdrawnTokenAmounts[idx]
+<<<<<<< HEAD
         .divDecimal(
           constants.BIGINT_TEN.pow(inputToken.decimals as u8).toBigDecimal()
         )
         .times(inputToken.lastPriceUSD!)
+=======
+        .divDecimal(inputTokenDecimals)
+        .times(inputTokenPrice.usdPrice)
+        .div(inputTokenPrice.decimalsBaseTen)
+>>>>>>> b5219fd (Squashed All)
     );
   }
 
@@ -165,12 +201,19 @@ export function Withdraw(
   pool.inputTokenBalances = inputTokenBalances;
   pool.totalValueLockedUSD = utils.getPoolTVL(
     pool.inputTokens,
+<<<<<<< HEAD
     pool.inputTokenBalances,
     block
   );
   pool.inputTokenWeights = utils.getPoolTokenWeights(poolAddress);
   pool.outputTokenSupply = tokenSupplyAfterWithdrawal;
   pool.outputTokenPriceUSD = utils.getOutputTokenPriceUSD(poolAddress, block);
+=======
+    pool.inputTokenBalances
+  );
+  pool.inputTokenWeights = utils.getPoolTokenWeights(poolAddress);
+  pool.outputTokenSupply = tokenSupplyAfterWithdrawal;
+>>>>>>> b5219fd (Squashed All)
   pool.save();
 
   createWithdrawTransaction(
@@ -185,8 +228,12 @@ export function Withdraw(
 
   let protocolSideRevenueUSD = getRemoveLiquidityFeesUSD(
     pool.inputTokens,
+<<<<<<< HEAD
     fees,
     block.number
+=======
+    fees
+>>>>>>> b5219fd (Squashed All)
   );
 
   updateRevenueSnapshots(

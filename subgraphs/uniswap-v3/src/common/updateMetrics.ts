@@ -141,6 +141,11 @@ export function updatePoolMetrics(event: ethereum.Event): void {
   poolMetricsDaily.cumulativeVolumeUSD = pool.cumulativeVolumeUSD;
   poolMetricsDaily.inputTokenBalances = pool.inputTokenBalances;
   poolMetricsDaily.inputTokenWeights = pool.inputTokenWeights;
+<<<<<<< HEAD
+=======
+  poolMetricsDaily.outputTokenSupply = pool.outputTokenSupply;
+  poolMetricsDaily.outputTokenPriceUSD = pool.outputTokenPriceUSD;
+>>>>>>> b5219fd (Squashed All)
   poolMetricsDaily.blockNumber = event.block.number;
   poolMetricsDaily.timestamp = event.block.timestamp;
 
@@ -148,6 +153,11 @@ export function updatePoolMetrics(event: ethereum.Event): void {
   poolMetricsHourly.cumulativeVolumeUSD = pool.cumulativeVolumeUSD;
   poolMetricsHourly.inputTokenBalances = pool.inputTokenBalances;
   poolMetricsHourly.inputTokenWeights = pool.inputTokenWeights;
+<<<<<<< HEAD
+=======
+  poolMetricsHourly.outputTokenSupply = pool.outputTokenSupply;
+  poolMetricsHourly.outputTokenPriceUSD = pool.outputTokenPriceUSD;
+>>>>>>> b5219fd (Squashed All)
   poolMetricsHourly.blockNumber = event.block.number;
   poolMetricsHourly.timestamp = event.block.timestamp;
 

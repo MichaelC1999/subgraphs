@@ -16,6 +16,10 @@ import {
   getOrCreateUsageMetricsHourlySnapshot,
 } from "../common/initializers";
 import * as utils from "../common/utils";
+<<<<<<< HEAD
+=======
+import { getUsdPricePerToken } from "../prices";
+>>>>>>> b5219fd (Squashed All)
 import * as constants from "../common/constants";
 import { updateRevenueSnapshots } from "./Revenue";
 import { WeightedPool as WeightedPoolContract } from "../../generated/templates/WeightedPool/WeightedPool";
@@ -83,14 +87,19 @@ export function UpdateMetricsAfterDeposit(block: ethereum.Block): void {
 
 export function getAddLiquidityFeesUSD(
   inputTokens: string[],
+<<<<<<< HEAD
   fees: BigInt[],
   block: ethereum.Block
+=======
+  fees: BigInt[]
+>>>>>>> b5219fd (Squashed All)
 ): BigDecimal {
   let totalFeesUSD = constants.BIGDECIMAL_ZERO;
 
   for (let idx = 0; idx < inputTokens.length; idx++) {
     if (fees.at(idx) == constants.BIGINT_ZERO) continue;
 
+<<<<<<< HEAD
     let inputToken = utils.getOrCreateTokenFromString(
       inputTokens.at(idx),
       block.number
@@ -102,6 +111,17 @@ export function getAddLiquidityFeesUSD(
         constants.BIGINT_TEN.pow(inputToken.decimals as u8).toBigDecimal()
       )
       .times(inputToken.lastPriceUSD!);
+=======
+    let inputToken = Address.fromString(inputTokens.at(idx));
+    let inputTokenPrice = getUsdPricePerToken(inputToken);
+    let inputTokenDecimals = utils.getTokenDecimals(inputToken);
+
+    let inputTokenFee = fees
+      .at(idx)
+      .divDecimal(inputTokenDecimals)
+      .times(inputTokenPrice.usdPrice)
+      .div(inputTokenPrice.decimalsBaseTen);
+>>>>>>> b5219fd (Squashed All)
 
     totalFeesUSD = totalFeesUSD.plus(inputTokenFee);
   }
@@ -124,12 +144,22 @@ export function Deposit(
   let depositAmountUSD = constants.BIGDECIMAL_ZERO;
 
   for (let idx = 0; idx < depositedCoinAmounts.length; idx++) {
+<<<<<<< HEAD
     let inputToken = utils.getOrCreateTokenFromString(
       pool.inputTokens[idx],
       block.number
     );
 
     let inputTokenIndex = pool.inputTokens.indexOf(inputToken.id);
+=======
+    let inputToken = utils.getOrCreateTokenFromString(pool.inputTokens[idx]);
+    let inputTokenIndex = pool.inputTokens.indexOf(inputToken.id);
+
+    let inputTokenAddress = Address.fromString(inputToken.id);
+    let inputTokenPrice = getUsdPricePerToken(inputTokenAddress);
+    let inputTokenDecimals = utils.getTokenDecimals(inputTokenAddress);
+
+>>>>>>> b5219fd (Squashed All)
     inputTokenBalances[inputTokenIndex] = inputTokenBalances[
       inputTokenIndex
     ].plus(depositedCoinAmounts[idx].minus(fees[idx]));
@@ -138,10 +168,16 @@ export function Deposit(
 
     depositAmountUSD = depositAmountUSD.plus(
       depositedCoinAmounts[idx]
+<<<<<<< HEAD
         .divDecimal(
           constants.BIGINT_TEN.pow(inputToken.decimals as u8).toBigDecimal()
         )
         .times(inputToken.lastPriceUSD!)
+=======
+        .divDecimal(inputTokenDecimals)
+        .times(inputTokenPrice.usdPrice)
+        .div(inputTokenPrice.decimalsBaseTen)
+>>>>>>> b5219fd (Squashed All)
     );
   }
 
@@ -157,12 +193,19 @@ export function Deposit(
   pool.inputTokenBalances = inputTokenBalances;
   pool.totalValueLockedUSD = utils.getPoolTVL(
     pool.inputTokens,
+<<<<<<< HEAD
     pool.inputTokenBalances,
     block
   );
   pool.inputTokenWeights = utils.getPoolTokenWeights(poolAddress);
   pool.outputTokenSupply = totalSupplyAfterDeposit;
   pool.outputTokenPriceUSD = utils.getOutputTokenPriceUSD(poolAddress, block);
+=======
+    pool.inputTokenBalances
+  );
+  pool.inputTokenWeights = utils.getPoolTokenWeights(poolAddress);
+  pool.outputTokenSupply = totalSupplyAfterDeposit;
+>>>>>>> b5219fd (Squashed All)
   pool.save();
 
   createDepositTransaction(
@@ -175,11 +218,15 @@ export function Deposit(
     block
   );
 
+<<<<<<< HEAD
   let protocolSideRevenueUSD = getAddLiquidityFeesUSD(
     pool.inputTokens,
     fees,
     block
   );
+=======
+  let protocolSideRevenueUSD = getAddLiquidityFeesUSD(pool.inputTokens, fees);
+>>>>>>> b5219fd (Squashed All)
 
   updateRevenueSnapshots(
     pool,

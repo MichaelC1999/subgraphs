@@ -32,7 +32,11 @@ export function updateTvl(event: ethereum.Event): void {
   }
 
   // Track existing TVL for cumulative calculations
+<<<<<<< HEAD
   let vault = getOrCreateVault(event.address, event);
+=======
+  let vault = getOrCreateVault(event.address, event.block);
+>>>>>>> b5219fd (Squashed All)
   let oldTvl = vault.totalValueLockedUSD;
 
   let newTvl = getDualTokenUSD(
@@ -64,9 +68,13 @@ export function updateTvl(event: ethereum.Event): void {
   vault.totalValueLockedUSD = newTvl;
   vault.outputTokenPriceUSD = outputTokenPriceUSD;
 
+<<<<<<< HEAD
   protocol.totalValueLockedUSD = protocol.totalValueLockedUSD.plus(
     newTvl.minus(oldTvl)
   );
+=======
+  protocol.totalValueLockedUSD += newTvl.minus(oldTvl);
+>>>>>>> b5219fd (Squashed All)
 
   financialsDailySnapshot.totalValueLockedUSD = protocol.totalValueLockedUSD;
   financialsDailySnapshot.blockNumber = event.block.number;
@@ -105,6 +113,7 @@ export function updateRevenue(event: Rebalance): void {
     REGISTRY_ADDRESS_MAP.get(dataSource.network())!
   );
   let financialsDailySnapshot = getOrCreateFinancialsDailySnapshot(event);
+<<<<<<< HEAD
   let VaultDailySnapshot = getOrCreateVaultDailySnapshot(event);
   let VaultHourlySnapshot = getOrCreateVaultHourlySnapshot(event);
   let vault = getOrCreateVault(event.address, event);
@@ -158,6 +167,18 @@ export function updateRevenue(event: Rebalance): void {
     );
   VaultHourlySnapshot.hourlyTotalRevenueUSD =
     VaultHourlySnapshot.hourlyTotalRevenueUSD.plus(eventTotalRevenueUSD);
+=======
+
+  // Update protocol cumulative revenue
+  protocol.cumulativeSupplySideRevenueUSD += eventSupplySideRevenueUSD;
+  protocol.cumulativeProtocolSideRevenueUSD += eventProtocolSideRevenueUSD;
+  protocol.cumulativeTotalRevenueUSD += eventTotalRevenueUSD;
+
+  // Increment daily revenues
+  financialsDailySnapshot.dailySupplySideRevenueUSD += eventSupplySideRevenueUSD;
+  financialsDailySnapshot.dailyProtocolSideRevenueUSD += eventProtocolSideRevenueUSD;
+  financialsDailySnapshot.dailyTotalRevenueUSD += eventTotalRevenueUSD;
+>>>>>>> b5219fd (Squashed All)
 
   // Update cumulative revenue from protocol
   financialsDailySnapshot.cumulativeSupplySideRevenueUSD =
@@ -171,8 +192,12 @@ export function updateRevenue(event: Rebalance): void {
   financialsDailySnapshot.timestamp = event.block.timestamp;
 
   protocol.save();
+<<<<<<< HEAD
   vault.save();
   financialsDailySnapshot.save();
   VaultDailySnapshot.save();
   VaultHourlySnapshot.save();
+=======
+  financialsDailySnapshot.save();
+>>>>>>> b5219fd (Squashed All)
 }

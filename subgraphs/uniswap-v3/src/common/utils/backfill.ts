@@ -17,7 +17,10 @@ import {
   getOrCreateDex,
   getOrCreateLPToken,
   getOrCreateToken,
+<<<<<<< HEAD
   getTradingFee,
+=======
+>>>>>>> b5219fd (Squashed All)
 } from "../getters";
 import { updateTokenWhitelists } from "../updateMetrics";
 import { Pool as PoolTemplate } from "../../../generated/templates";
@@ -71,11 +74,16 @@ export function populateEmptyPools(event: ethereum.Event): void {
     pool.fees = createPoolFees(poolAddress, poolContract.fee());
     pool.createdTimestamp = event.block.timestamp;
     pool.createdBlockNumber = event.block.number;
+<<<<<<< HEAD
+=======
+    pool.name = protocol.name + " " + LPtoken.symbol;
+>>>>>>> b5219fd (Squashed All)
     pool.symbol = LPtoken.symbol;
     pool.cumulativeProtocolSideRevenueUSD = BIGDECIMAL_ZERO;
     pool.cumulativeSupplySideRevenueUSD = BIGDECIMAL_ZERO;
     pool.cumulativeTotalRevenueUSD = BIGDECIMAL_ZERO;
 
+<<<<<<< HEAD
     pool.name =
       protocol.name +
       " " +
@@ -84,6 +92,8 @@ export function populateEmptyPools(event: ethereum.Event): void {
       getTradingFee(pool.id).toString() +
       "%";
 
+=======
+>>>>>>> b5219fd (Squashed All)
     poolAmounts.inputTokens = [token0.id, token1.id];
     poolAmounts.inputTokenBalances = [BIGDECIMAL_ZERO, BIGDECIMAL_ZERO];
     poolAmounts.tokenPrices = [BIGDECIMAL_ZERO, BIGDECIMAL_ZERO];

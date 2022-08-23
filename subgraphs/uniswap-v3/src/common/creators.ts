@@ -14,15 +14,28 @@ import {
   getLiquidityPool,
   getLiquidityPoolAmounts,
   getOrCreateDex,
+<<<<<<< HEAD
   getOrCreateToken,
   getTradingFee,
+=======
+  getOrCreateLPToken,
+  getOrCreateToken,
+>>>>>>> b5219fd (Squashed All)
 } from "./getters";
 import { NetworkConfigs } from "../../configurations/configure";
 import {
   BIGDECIMAL_FIFTY,
   BIGDECIMAL_NEG_ONE,
+<<<<<<< HEAD
   BIGDECIMAL_ZERO,
   BIGINT_NEG_ONE,
+=======
+  BIGDECIMAL_ONE,
+  BIGDECIMAL_TWO,
+  BIGDECIMAL_ZERO,
+  BIGINT_NEG_ONE,
+  BIGINT_ONE,
+>>>>>>> b5219fd (Squashed All)
   BIGINT_ZERO,
   INT_ONE,
   INT_ZERO,
@@ -53,6 +66,10 @@ export function createLiquidityPool(
   // create the tokens and tokentracker
   let token0 = getOrCreateToken(token0Address);
   let token1 = getOrCreateToken(token1Address);
+<<<<<<< HEAD
+=======
+  let LPtoken = getOrCreateLPToken(poolAddress, token0, token1);
+>>>>>>> b5219fd (Squashed All)
 
   updateTokenWhitelists(token0, token1, poolAddress);
 
@@ -61,16 +78,25 @@ export function createLiquidityPool(
 
   pool.protocol = protocol.id;
   pool.inputTokens = [token0.id, token1.id];
+<<<<<<< HEAD
+=======
+  pool.outputToken = LPtoken.id;
+>>>>>>> b5219fd (Squashed All)
   pool.totalValueLockedUSD = BIGDECIMAL_ZERO;
   pool.cumulativeVolumeUSD = BIGDECIMAL_ZERO;
   pool.inputTokenBalances = [BIGINT_ZERO, BIGINT_ZERO];
   pool.inputTokenWeights = [BIGDECIMAL_FIFTY, BIGDECIMAL_FIFTY];
+<<<<<<< HEAD
+=======
+  pool.outputTokenSupply = BIGINT_ZERO;
+>>>>>>> b5219fd (Squashed All)
   pool.fees = createPoolFees(poolAddress, fees);
   pool.createdTimestamp = event.block.timestamp;
   pool.createdBlockNumber = event.block.number;
   pool.name =
     protocol.name +
     " " +
+<<<<<<< HEAD
     token0.name +
     "/" +
     token1.name +
@@ -78,6 +104,13 @@ export function createLiquidityPool(
     getTradingFee(pool.id).toString() +
     "%";
   pool.symbol = token0.name + "/" + token1.name;
+=======
+    LPtoken.symbol +
+    " " +
+    convertFeeToPercent(fees).toString() +
+    "%";
+  pool.symbol = LPtoken.symbol;
+>>>>>>> b5219fd (Squashed All)
   pool.cumulativeProtocolSideRevenueUSD = BIGDECIMAL_ZERO;
   pool.cumulativeSupplySideRevenueUSD = BIGDECIMAL_ZERO;
   pool.cumulativeTotalRevenueUSD = BIGDECIMAL_ZERO;
@@ -107,6 +140,10 @@ export function createLiquidityPool(
   pool.save();
   token0.save();
   token1.save();
+<<<<<<< HEAD
+=======
+  LPtoken.save();
+>>>>>>> b5219fd (Squashed All)
   poolAmounts.save();
   poolDeposits.save();
 }
@@ -148,7 +185,10 @@ function incrementDepositHelper(poolAddress: string): void {
 // Also, updated token balances and total value locked.
 export function createDeposit(
   event: ethereum.Event,
+<<<<<<< HEAD
   owner: Address,
+=======
+>>>>>>> b5219fd (Squashed All)
   amount0: BigInt,
   amount1: BigInt
 ): void {
@@ -191,6 +231,12 @@ export function createDeposit(
     .times(token0.lastPriceUSD!)
     .plus(poolAmounts.inputTokenBalances[1].times(token1.lastPriceUSD!));
 
+<<<<<<< HEAD
+=======
+  // Increment for NFT minted representing the position
+  pool.outputTokenSupply = pool.outputTokenSupply!.plus(BIGINT_ONE);
+
+>>>>>>> b5219fd (Squashed All)
   // Add pool value back to protocol total value locked
   protocol.totalValueLockedUSD = protocol.totalValueLockedUSD.plus(
     pool.totalValueLockedUSD
@@ -207,11 +253,21 @@ export function createDeposit(
   deposit.logIndex = event.logIndex.toI32();
   deposit.protocol = protocol.id;
   deposit.to = pool.id;
+<<<<<<< HEAD
   deposit.from = owner.toHexString();
   deposit.blockNumber = event.block.number;
   deposit.timestamp = event.block.timestamp;
   deposit.inputTokens = [pool.inputTokens[0], pool.inputTokens[1]];
   deposit.inputTokenAmounts = [amount0, amount1];
+=======
+  deposit.from = event.transaction.from.toHexString();
+  deposit.blockNumber = event.block.number;
+  deposit.timestamp = event.block.timestamp;
+  deposit.inputTokens = [pool.inputTokens[0], pool.inputTokens[1]];
+  deposit.outputToken = pool.outputToken;
+  deposit.inputTokenAmounts = [amount0, amount1];
+  deposit.outputTokenAmount = BIGINT_ONE;
+>>>>>>> b5219fd (Squashed All)
   deposit.pool = pool.id;
   deposit.amountUSD = amountUSD;
 
@@ -228,7 +284,10 @@ export function createDeposit(
 // Also, updated token balances and total value locked.
 export function createWithdraw(
   event: ethereum.Event,
+<<<<<<< HEAD
   owner: Address,
+=======
+>>>>>>> b5219fd (Squashed All)
   amount0: BigInt,
   amount1: BigInt
 ): void {
@@ -271,6 +330,12 @@ export function createWithdraw(
     .times(token0.lastPriceUSD!)
     .plus(poolAmounts.inputTokenBalances[1].times(token1.lastPriceUSD!));
 
+<<<<<<< HEAD
+=======
+  // Increment for NFT minted representing the position
+  pool.outputTokenSupply = pool.outputTokenSupply!.minus(BIGINT_ONE);
+
+>>>>>>> b5219fd (Squashed All)
   // reset aggregates with new amounts
   protocol.totalValueLockedUSD = protocol.totalValueLockedUSD.plus(
     pool.totalValueLockedUSD
@@ -286,12 +351,22 @@ export function createWithdraw(
   withdrawal.hash = event.transaction.hash.toHexString();
   withdrawal.logIndex = event.logIndex.toI32();
   withdrawal.protocol = protocol.id;
+<<<<<<< HEAD
   withdrawal.to = owner.toHexString();
+=======
+  withdrawal.to = event.transaction.from.toHexString();
+>>>>>>> b5219fd (Squashed All)
   withdrawal.from = pool.id;
   withdrawal.blockNumber = event.block.number;
   withdrawal.timestamp = event.block.timestamp;
   withdrawal.inputTokens = [pool.inputTokens[0], pool.inputTokens[1]];
+<<<<<<< HEAD
   withdrawal.inputTokenAmounts = [amount0, amount1];
+=======
+  withdrawal.outputToken = pool.outputToken;
+  withdrawal.inputTokenAmounts = [amount0, amount1];
+  withdrawal.outputTokenAmount = BIGINT_ONE;
+>>>>>>> b5219fd (Squashed All)
   withdrawal.pool = pool.id;
   withdrawal.amountUSD = amountUSD;
 
@@ -307,8 +382,13 @@ export function createSwapHandleVolumeAndFees(
   event: ethereum.Event,
   amount0: BigInt,
   amount1: BigInt,
+<<<<<<< HEAD
   recipient: Address,
   sender: Address,
+=======
+  to: Address,
+  from: Address,
+>>>>>>> b5219fd (Squashed All)
   sqrtPriceX96: BigInt
 ): void {
   let poolAddress = event.address.toHexString();
@@ -396,8 +476,13 @@ export function createSwapHandleVolumeAndFees(
   swap.hash = event.transaction.hash.toHexString();
   swap.logIndex = event.logIndex.toI32();
   swap.protocol = protocol.id;
+<<<<<<< HEAD
   swap.to = recipient.toHexString();
   swap.from = sender.toHexString();
+=======
+  swap.to = to.toHexString();
+  swap.from = from.toHexString();
+>>>>>>> b5219fd (Squashed All)
   swap.blockNumber = event.block.number;
   swap.timestamp = event.block.timestamp;
   swap.tokenIn = amount0 > BIGINT_ZERO ? token0.id : token1.id;

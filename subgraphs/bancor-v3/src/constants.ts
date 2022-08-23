@@ -76,9 +76,13 @@ export let oneBD = new BigDecimal(BigInt.fromI32(1));
 export let hundredBD = new BigDecimal(BigInt.fromI32(100));
 
 export function exponentToBigDecimal(n: i32): BigDecimal {
+<<<<<<< HEAD
   return exponentToBigInt(n).toBigDecimal();
 }
 
 export function exponentToBigInt(n: i32): BigInt {
   return BigInt.fromI32(10).pow(n as u8);
+=======
+  return BigDecimal.fromString(Math.pow(10, n).toString());
+>>>>>>> b5219fd (Squashed All)
 }

@@ -1,23 +1,35 @@
 import {
   getOrCreateRewardToken,
   getOrCreateLiquidityPool,
+<<<<<<< HEAD
   getOrCreateToken,
 } from "../common/initializers";
 import * as utils from "../common/utils";
+=======
+} from "../common/initializers";
+import * as utils from "../common/utils";
+import { getUsdPricePerToken } from "../prices";
+>>>>>>> b5219fd (Squashed All)
 import * as constants from "../common/constants";
 import { RewardsInfoType } from "../common/types";
 import { getRewardsPerDay } from "../common/rewards";
 import { log, BigInt, Address, ethereum } from "@graphprotocol/graph-ts";
 import { Gauge as LiquidityGaugeContract } from "../../generated/templates/gauge/Gauge";
 import { GaugeController as GaugeControllereContract } from "../../generated/GaugeController/GaugeController";
+<<<<<<< HEAD
 import { readValue } from "../common/utils";
+=======
+>>>>>>> b5219fd (Squashed All)
 
 export function getRewardsData(gaugeAddress: Address): RewardsInfoType {
   let rewardRates: BigInt[] = [];
   let rewardTokens: Address[] = [];
 
   let gaugeContract = LiquidityGaugeContract.bind(gaugeAddress);
+<<<<<<< HEAD
 
+=======
+>>>>>>> b5219fd (Squashed All)
   let rewardCount = utils.readValue<BigInt>(
     gaugeContract.try_reward_count(),
     constants.BIGINT_TEN
@@ -46,16 +58,29 @@ export function getRewardsData(gaugeAddress: Address): RewardsInfoType {
   return new RewardsInfoType(rewardTokens, rewardRates);
 }
 
+<<<<<<< HEAD
 export function updateControllerRewards(
+=======
+export function updateBalancerRewards(
+>>>>>>> b5219fd (Squashed All)
   poolAddress: Address,
   gaugeAddress: Address,
   block: ethereum.Block
 ): void {
+<<<<<<< HEAD
+=======
+  const pool = getOrCreateLiquidityPool(poolAddress, block);
+
+  let gaugeContract = LiquidityGaugeContract.bind(gaugeAddress);
+>>>>>>> b5219fd (Squashed All)
   let gaugeControllerContract = GaugeControllereContract.bind(
     constants.GAUGE_CONTROLLER_ADDRESS
   );
 
+<<<<<<< HEAD
   // Returns BIGINT_ZERO if the weight is zero or the GaugeControllerContract is the childChainLiquidityGaugeFactory version.
+=======
+>>>>>>> b5219fd (Squashed All)
   let gaugeRelativeWeight = utils
     .readValue<BigInt>(
       gaugeControllerContract.try_gauge_relative_weight(gaugeAddress),
@@ -63,6 +88,7 @@ export function updateControllerRewards(
     )
     .toBigDecimal();
 
+<<<<<<< HEAD
   // This essentially checks if the gauge is a GaugeController gauge instead of a childChainLiquidityGaugeFactory contract.
   if (gaugeRelativeWeight.equals(constants.BIGDECIMAL_ZERO)) {
     return;
@@ -97,6 +123,8 @@ export function updateFactoryRewards(
   const pool = getOrCreateLiquidityPool(poolAddress, block);
   let gaugeContract = LiquidityGaugeContract.bind(gaugeAddress);
 
+=======
+>>>>>>> b5219fd (Squashed All)
   let gaugeWorkingSupply = utils
     .readValue<BigInt>(
       gaugeContract.try_working_supply(),
@@ -104,7 +132,13 @@ export function updateFactoryRewards(
     )
     .toBigDecimal();
 
+<<<<<<< HEAD
   // https://dev.balancer.fi/resources/vebal-and-gauges/estimating-gauge-incentive-aprs/apr-calculation
+=======
+  let balRewardEmissionsPerDay =
+    constants.DAILY_BAL_EMISSIONS.times(gaugeRelativeWeight);
+
+>>>>>>> b5219fd (Squashed All)
   pool.stakedOutputTokenAmount = BigInt.fromString(
     constants.BIGINT_ONE.divDecimal(
       constants.BIGDECIMAL_POINT_FOUR.div(
@@ -115,9 +149,26 @@ export function updateFactoryRewards(
       .toString()
   );
   pool.save();
+<<<<<<< HEAD
   //////////////////////////////////////////////////////////////////
 
   // Get data for all reward tokens for this gauge
+=======
+
+  updateRewardTokenEmissions(
+    constants.BALANCER_TOKEN_ADDRESS,
+    poolAddress,
+    BigInt.fromString(balRewardEmissionsPerDay.truncate(0).toString()),
+    block
+  );
+}
+
+export function updateRewardTokenInfo(
+  poolAddress: Address,
+  gaugeAddress: Address,
+  block: ethereum.Block
+): void {
+>>>>>>> b5219fd (Squashed All)
   let rewardsInfo = getRewardsData(gaugeAddress);
 
   let rewardTokens = rewardsInfo.getRewardTokens;
@@ -153,11 +204,15 @@ export function updateRewardTokenEmissions(
   block: ethereum.Block
 ): void {
   const pool = getOrCreateLiquidityPool(poolAddress, block);
+<<<<<<< HEAD
   const rewardToken = getOrCreateRewardToken(
     rewardTokenAddress,
     RewardTokenType.DEPOSIT,
     block
   );
+=======
+  const rewardToken = getOrCreateRewardToken(rewardTokenAddress);
+>>>>>>> b5219fd (Squashed All)
 
   if (!pool.rewardTokens) {
     pool.rewardTokens = [];
@@ -181,6 +236,7 @@ export function updateRewardTokenEmissions(
   }
   let rewardTokenEmissionsUSD = pool.rewardTokenEmissionsUSD!;
 
+<<<<<<< HEAD
   const rewardTokenPrice = getOrCreateToken(rewardTokenAddress, block.number);
 
   rewardTokenEmissionsAmount[rewardTokenIndex] = rewardTokenPerDay;
@@ -189,12 +245,24 @@ export function updateRewardTokenEmissions(
       constants.BIGINT_TEN.pow(rewardTokenPrice.decimals as u8).toBigDecimal()
     )
     .times(rewardTokenPrice.lastPriceUSD!);
+=======
+  const rewardTokenPrice = getUsdPricePerToken(rewardTokenAddress);
+  const rewardTokenDecimals = utils.getTokenDecimals(rewardTokenAddress);
+
+  rewardTokenEmissionsAmount[rewardTokenIndex] = rewardTokenPerDay;
+  rewardTokenEmissionsUSD[rewardTokenIndex] = rewardTokenPerDay
+    .toBigDecimal()
+    .div(rewardTokenDecimals)
+    .times(rewardTokenPrice.usdPrice)
+    .div(rewardTokenPrice.decimalsBaseTen);
+>>>>>>> b5219fd (Squashed All)
 
   pool.rewardTokenEmissionsAmount = rewardTokenEmissionsAmount;
   pool.rewardTokenEmissionsUSD = rewardTokenEmissionsUSD;
 
   pool.save();
 }
+<<<<<<< HEAD
 
 export function getPoolFromGauge(gaugeAddress: Address): Address | null {
   const gaugeContract = LiquidityGaugeContract.bind(gaugeAddress);
@@ -208,3 +276,5 @@ export function getPoolFromGauge(gaugeAddress: Address): Address | null {
 
   return poolAddress;
 }
+=======
+>>>>>>> b5219fd (Squashed All)

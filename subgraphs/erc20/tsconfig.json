@@ -1,4 +1,8 @@
 {
   "extends": "@graphprotocol/graph-ts/types/tsconfig.base.json",
+<<<<<<< HEAD
   "include": ["src", "configurations/configurations.ts"]
+=======
+  "include": ["src"]
+>>>>>>> b5219fd (Squashed All)
 }

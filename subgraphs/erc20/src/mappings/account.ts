@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Bytes, ethereum, BigInt } from "@graphprotocol/graph-ts";
+=======
+import { BigDecimal, Bytes, ethereum, BigInt } from "@graphprotocol/graph-ts";
+>>>>>>> b5219fd (Squashed All)
 
 import {
   Account,
@@ -7,9 +11,15 @@ import {
   Token,
 } from "../../generated/schema";
 
+<<<<<<< HEAD
 import { BIGINT_ZERO, SECONDS_PER_DAY } from "../common/constants";
 
 export function isNewAccount(accountAddress: Bytes): boolean {
+=======
+import { BIGDECIMAL_ZERO, SECONDS_PER_DAY } from "../common/constants";
+
+export function isNewAccount(accountAddress: Bytes): bool {
+>>>>>>> b5219fd (Squashed All)
   let accountId = accountAddress.toHex();
   let existingAccount = Account.load(accountId);
 
@@ -47,7 +57,11 @@ export function getOrCreateAccountBalance(
   let newBalance = new AccountBalance(balanceId);
   newBalance.account = account.id;
   newBalance.token = token.id;
+<<<<<<< HEAD
   newBalance.amount = BIGINT_ZERO;
+=======
+  newBalance.amount = BIGDECIMAL_ZERO;
+>>>>>>> b5219fd (Squashed All)
 
   return newBalance;
 }
@@ -55,7 +69,11 @@ export function getOrCreateAccountBalance(
 export function increaseAccountBalance(
   account: Account,
   token: Token,
+<<<<<<< HEAD
   amount: BigInt
+=======
+  amount: BigDecimal
+>>>>>>> b5219fd (Squashed All)
 ): AccountBalance {
   let balance = getOrCreateAccountBalance(account, token);
   balance.amount = balance.amount.plus(amount);
@@ -66,12 +84,21 @@ export function increaseAccountBalance(
 export function decreaseAccountBalance(
   account: Account,
   token: Token,
+<<<<<<< HEAD
   amount: BigInt
 ): AccountBalance {
   let balance = getOrCreateAccountBalance(account, token);
   balance.amount = balance.amount.minus(amount);
   if (balance.amount < BIGINT_ZERO) {
     balance.amount = BIGINT_ZERO;
+=======
+  amount: BigDecimal
+): AccountBalance {
+  let balance = getOrCreateAccountBalance(account, token);
+  balance.amount = balance.amount.minus(amount);
+  if (balance.amount < BIGDECIMAL_ZERO) {
+    balance.amount = BIGDECIMAL_ZERO;
+>>>>>>> b5219fd (Squashed All)
   }
 
   return balance;

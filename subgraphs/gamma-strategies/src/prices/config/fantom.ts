@@ -51,8 +51,11 @@ SPOOKY_SWAP_ROUTER_ADDRESS.set(
   Address.fromString("0x0000000000000000000000000000000000000000")
 );
 
+<<<<<<< HEAD
 export const SPOOKY_SWAP_PATH_OVERRIDE = new TypedMap<Address, Address[]>();
 
+=======
+>>>>>>> b5219fd (Squashed All)
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////////// YEARNLENS CONTRACT //////////////////////////
 ///////////////////////////////////////////////////////////////////////////
@@ -72,8 +75,11 @@ export const CHAIN_LINK_CONTRACT_ADDRESS = Address.fromString(
 ///////////////////////////////// HELPERS /////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
+<<<<<<< HEAD
 export const USDC_DECIMALS = 6;
 
+=======
+>>>>>>> b5219fd (Squashed All)
 export const WHITELIST_TOKENS = new TypedMap<string, Address>();
 WHITELIST_TOKENS.set(
   "WETH",

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { Address, BigInt, dataSource, log } from "@graphprotocol/graph-ts";
+=======
+import { Address, BigInt, log } from "@graphprotocol/graph-ts";
+>>>>>>> b5219fd (Squashed All)
 // import from the generated at root in order to reuse methods from root
 import {
   NewPriceOracle,
@@ -63,7 +67,10 @@ export function handleNewPriceOracle(event: NewPriceOracle): void {
 
 export function handleMarketEntered(event: MarketEntered): void {
   _handleMarketEntered(
+<<<<<<< HEAD
     comptrollerAddr,
+=======
+>>>>>>> b5219fd (Squashed All)
     event.params.cToken.toHexString(),
     event.params.account.toHexString(),
     true
@@ -72,7 +79,10 @@ export function handleMarketEntered(event: MarketEntered): void {
 
 export function handleMarketExited(event: MarketExited): void {
   _handleMarketEntered(
+<<<<<<< HEAD
     comptrollerAddr,
+=======
+>>>>>>> b5219fd (Squashed All)
     event.params.cToken.toHexString(),
     event.params.account.toHexString(),
     false
@@ -87,6 +97,7 @@ export function handleMarketListed(event: MarketListed): void {
   if (cToken != null) {
     return;
   }
+<<<<<<< HEAD
 
   // handle edge case
   // iron bank (ethereum) has 2 cySUSD tokens: 0x4e3a36a633f63aee0ab57b5054ec78867cb3c0b8 (deployed earlier) and 0xa7c4054AFD3DbBbF5bFe80f41862b89ea05c9806 (in use)
@@ -101,6 +112,8 @@ export function handleMarketListed(event: MarketListed): void {
     return;
   }
 
+=======
+>>>>>>> b5219fd (Squashed All)
   // this is a new cToken, a new underlying token, and a new market
 
   let protocol = getOrCreateProtocol();
@@ -274,7 +287,10 @@ export function handleAccrueInterest(event: AccrueInterest): void {
     comptrollerAddr,
     interestAccumulated,
     totalBorrows,
+<<<<<<< HEAD
     false, // do not update all prices
+=======
+>>>>>>> b5219fd (Squashed All)
     event
   );
 }
@@ -286,7 +302,11 @@ function getOrCreateProtocol(): LendingProtocol {
     "Iron Bank",
     "iron-bank",
     "2.0.1",
+<<<<<<< HEAD
     "1.1.3",
+=======
+    "1.1.0",
+>>>>>>> b5219fd (Squashed All)
     "1.0.0",
     network,
     comptroller.try_liquidationIncentiveMantissa(),

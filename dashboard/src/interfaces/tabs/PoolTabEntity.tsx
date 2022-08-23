@@ -16,9 +16,12 @@ function addDataPoint(
   id: string,
 ): { [x: string]: any } {
   dataFields[fieldName].push({ value: value, date: Number(timestamp) });
+<<<<<<< HEAD
   if (dataFieldMetrics[fieldName].sum === null) {
     dataFieldMetrics[fieldName].sum = 0;
   }
+=======
+>>>>>>> b5219fd (Squashed All)
   dataFieldMetrics[fieldName].sum += value;
 
   if (fieldName.includes("umulative")) {
@@ -137,6 +140,7 @@ function PoolTabEntity({
         let value: any = currentInstanceField;
         try {
           if (!value && value !== 0 && !Array.isArray(currentInstanceField)) {
+<<<<<<< HEAD
             value = 0;
             if (!dataFields[fieldName]) {
               dataFields[fieldName] = [];
@@ -159,6 +163,32 @@ function PoolTabEntity({
             );
             dataFields[fieldName] = returnedData.currentEntityField;
             dataFieldMetrics[fieldName] = returnedData.currentEntityFieldMetrics;
+=======
+            let dataType = "undefined";
+            if (value === null) {
+              dataType = "null";
+            }
+            if (isNaN(value)) {
+              dataType = "NaN";
+            }
+            dataFields[fieldName] = [];
+            dataFieldMetrics[fieldName] = { sum: 0, invalidDataPlot: dataType };
+            if (
+              capsFieldName.includes("REWARD") &&
+              issues.filter((x) => x.type === "VAL" && x.fieldName.includes(fieldName)).length === 0
+            ) {
+              issues.push({
+                type: "VAL",
+                level: "critical",
+                fieldName: fieldName,
+                message: `${timeseriesInstance.__typename}-${fieldName} should be an array, but has a ${dataType} value in its timeseries data (first instance in ${timeseriesInstance.__typename} ${timeseriesInstance.id})`,
+              });
+            }
+            if (capsFieldName === "REWARDTOKENEMISSIONSUSD") {
+              dataFields.rewardAPR = [];
+              dataFieldMetrics.rewardAPR = { sum: 0, invalidDataPlot: dataType };
+            }
+>>>>>>> b5219fd (Squashed All)
             continue;
           }
           if (!isNaN(currentInstanceField) && !Array.isArray(currentInstanceField) && currentInstanceField) {
@@ -329,14 +359,23 @@ function PoolTabEntity({
                   const factors = ["rewardTokenEmissionsUSD"];
                   let apr = 0;
                   if (
+<<<<<<< HEAD
                     currentRewardToken?.type === "BORROW" &&
                     data.protocols[0]?.type === "LENDING" &&
+=======
+                    currentRewardToken.type === "BORROW" &&
+                    data.protocols[0].type === "LENDING" &&
+>>>>>>> b5219fd (Squashed All)
                     timeseriesInstance?.totalBorrowBalanceUSD
                   ) {
                     apr = (Number(val) / timeseriesInstance.totalBorrowBalanceUSD) * 100 * 365;
                     factors.push("snapshot.totalBorrowBalanceUSD");
                   } else if (
+<<<<<<< HEAD
                     currentRewardToken?.type === "BORROW" &&
+=======
+                    currentRewardToken.type === "BORROW" &&
+>>>>>>> b5219fd (Squashed All)
                     issues.filter((x) => x.fieldName === entityName + "-" + fieldName && x.type === "BORROW").length ===
                       0
                   ) {
@@ -393,6 +432,7 @@ function PoolTabEntity({
                     dataFieldMetrics["rewardAPR [" + fieldSplitIdentifier + "]"].sum += apr;
                   }
                 }
+<<<<<<< HEAD
               } else {
                 value = 0;
               }
@@ -406,6 +446,30 @@ function PoolTabEntity({
               );
               dataFields[dataFieldKey] = returnedData.currentEntityField;
               dataFieldMetrics[dataFieldKey] = returnedData.currentEntityFieldMetrics;
+=======
+
+                const returnedData = addDataPoint(
+                  dataFields,
+                  dataFieldMetrics,
+                  dataFieldKey,
+                  Number(value),
+                  timeseriesInstance.timestamp,
+                  timeseriesInstance.id,
+                );
+                dataFields[dataFieldKey] = returnedData.currentEntityField;
+                dataFieldMetrics[dataFieldKey] = returnedData.currentEntityFieldMetrics;
+              } else {
+                let dataType = "undefined";
+                if (value === null) {
+                  dataType = "null";
+                }
+                if (isNaN(value)) {
+                  dataType = "NaN";
+                }
+                dataFields[dataFieldKey] = [];
+                dataFieldMetrics[dataFieldKey] = { sum: 0, invalidDataPlot: dataType };
+              }
+>>>>>>> b5219fd (Squashed All)
             });
           }
         } catch (err) {
@@ -454,8 +518,11 @@ function PoolTabEntity({
       }
     }
 
+<<<<<<< HEAD
     const fieldsList = Object.keys(dataFields);
 
+=======
+>>>>>>> b5219fd (Squashed All)
     const ratesChart: { [x: string]: any } = {};
     const rewardChart: { [x: string]: any } = {};
     const tokenWeightData: { [name: string]: any[] } = {};
@@ -491,6 +558,7 @@ function PoolTabEntity({
       const firstKey = Object.keys(rewardChart)[0];
       const amountOfInstances = rewardChart[Object.keys(rewardChart)[0]].length;
       for (let x = 0; x < amountOfInstances; x++) {
+<<<<<<< HEAD
         let date: number | null = null;
         Object.keys(rewardChart).forEach((z) => {
           if (rewardChart[z][x].date && !date) {
@@ -526,11 +594,30 @@ function PoolTabEntity({
       }
       Object.keys(rewardChart).forEach((reward: any, idx: number) => {
         const currentRewardToken: { [x: string]: string } = data[poolKeySingular].rewardTokens[idx]?.token;
+=======
+        tableVals.push({ value: [], date: rewardChart[firstKey][x].date });
+        Object.keys(rewardChart).forEach((reward: any, idx: number) => {
+          if (
+            dataFieldMetrics[reward].sum === 0 &&
+            issues.filter((x) => x.fieldName === entityName + "-" + reward).length === 0
+          ) {
+            const fieldName = entityName + "-" + reward;
+            issues.push({ type: "SUM", level: "error", fieldName, message: dataFieldMetrics[reward]?.factors });
+          }
+          const currentRewardToken: { [x: string]: string } = data[poolKeySingular]?.rewardTokens[idx]?.token;
+          const symbol = currentRewardToken?.symbol ? currentRewardToken?.symbol + " " : "";
+          tableVals[x].value.push(`${symbol}[${idx}]: ${rewardChart[reward][x].value.toFixed(3)}`);
+        });
+      }
+      Object.keys(rewardChart).forEach((reward: any, idx: number) => {
+        const currentRewardToken: { [x: string]: string } = data[poolKeySingular].rewardTokens[idx].token;
+>>>>>>> b5219fd (Squashed All)
         const name = currentRewardToken?.name ? currentRewardToken?.name : "N/A";
         const val = rewardChart[reward];
         rewardChart[`${name} [${idx}]`] = val;
         delete rewardChart[reward];
       });
+<<<<<<< HEAD
       if (tableVals.length === 0) {
         rewardAPRElement = null;
       } else {
@@ -555,6 +642,28 @@ function PoolTabEntity({
           </div>
         );
       }
+=======
+      const table = (
+        <Grid key={elementId + "Table"} item xs={4}>
+          <TableChart datasetLabel="rewardAPR" dataTable={tableVals} />
+        </Grid>
+      );
+      rewardAPRElement = (
+        <div id={elementId}>
+          <Box mt={3} mb={1}>
+            <CopyLinkToClipboard link={window.location.href} scrollId={elementId}>
+              <Typography variant="h6">{elementId}</Typography>
+            </CopyLinkToClipboard>
+          </Box>
+          <Grid container justifyContent="space-between">
+            <Grid key={elementId + "Chart"} item xs={7.5}>
+              <Chart datasetLabel="rewardAPR" dataChart={rewardChart} />
+            </Grid>
+            {table}
+          </Grid>
+        </div>
+      );
+>>>>>>> b5219fd (Squashed All)
     }
 
     // The ratesElement logic is used to take all of the rates and display their lines on one graph
@@ -646,6 +755,7 @@ function PoolTabEntity({
         if (!rewardFieldCount[fieldName]) {
           rewardFieldCount[fieldName] = 0;
         }
+<<<<<<< HEAD
 
         if (
           dataFields[field]?.length > 0 &&
@@ -656,6 +766,9 @@ function PoolTabEntity({
         ) {
           rewardFieldCount[fieldName] += 1;
         }
+=======
+        rewardFieldCount[fieldName] += 1;
+>>>>>>> b5219fd (Squashed All)
       } else if (fieldName.toUpperCase().includes("TOKEN") && !fieldName.toUpperCase().includes("OUTPUT")) {
         if (!inputTokenFieldCount[fieldName]) {
           inputTokenFieldCount[fieldName] = 0;
@@ -684,6 +797,7 @@ function PoolTabEntity({
           }
         } else {
           if (rewardFieldCount[field] > rewardTokensLength) {
+<<<<<<< HEAD
             if (!(rewardFieldCount[field] === 1 && dataFieldMetrics[field].sum === 0)) {
               issues.push({
                 type: "TOK",
@@ -692,6 +806,14 @@ function PoolTabEntity({
                 message: `rewardTokens///${rewardTokensLength - 1}`,
               });
             }
+=======
+            issues.push({
+              type: "TOK",
+              level: "error",
+              fieldName: `${data[poolKeySingular]?.name}-${field}///${rewardFieldCount[field] - 1}`,
+              message: `rewardTokens///${rewardTokensLength - 1}`,
+            });
+>>>>>>> b5219fd (Squashed All)
           } else if (rewardFieldCount[field] < rewardTokensLength) {
             issues.push({
               type: "TOK",
@@ -710,7 +832,11 @@ function PoolTabEntity({
           issues.push({
             type: "TOK",
             level: "error",
+<<<<<<< HEAD
             fieldName: `${data[poolKeySingular]?.name}-${field}///${inputTokenFieldCount[field] - 1}`,
+=======
+            fieldName: `${data[poolKeySingular]?.name}-${field}///${inputTokenFieldCount[field]}`,
+>>>>>>> b5219fd (Squashed All)
             message: `inputTokens///${inputTokensLength - 1}`,
           });
         } else if (inputTokenFieldCount[field] < inputTokensLength) {
@@ -718,11 +844,19 @@ function PoolTabEntity({
             type: "TOK",
             level: "error",
             fieldName: `${data[poolKeySingular]?.name}-inputTokens///${inputTokensLength - 1}`,
+<<<<<<< HEAD
             message: `${field}///${inputTokenFieldCount[field] - 1}`,
+=======
+            message: `${field}///${inputTokenFieldCount[field]}`,
+>>>>>>> b5219fd (Squashed All)
           });
         }
       }
     });
+<<<<<<< HEAD
+=======
+
+>>>>>>> b5219fd (Squashed All)
     return (
       <Grid key={entityName}>
         <Box my={3}>
@@ -732,6 +866,10 @@ function PoolTabEntity({
         </Box>
         {Object.keys(dataFields).map((field: string) => {
           const fieldName = field.split(" [")[0];
+<<<<<<< HEAD
+=======
+          // const schemaFieldTypeString = entitiesData[entityName][fieldName].split("");
+>>>>>>> b5219fd (Squashed All)
           let label = entityName + "-" + field;
           // Label changes, element id is constant
           const elementId = label;
@@ -804,12 +942,16 @@ function PoolTabEntity({
                 </div>
               );
             }
+<<<<<<< HEAD
 
             if (
               dataFieldMetrics[field].sum === 0 &&
               issues.filter((x) => x.fieldName === label).length === 0 &&
               !(fieldsList.filter((x) => x.includes(field))?.length > 1)
             ) {
+=======
+            if (dataFieldMetrics[field].sum === 0 && issues.filter((x) => x.fieldName === label).length === 0) {
+>>>>>>> b5219fd (Squashed All)
               // This array holds field names for fields that trigger a critical level issue rather than just an error level if all values are 0
               const criticalZeroFields = ["totalValueLockedUSD", "deposit"];
               let level = null;
@@ -870,6 +1012,7 @@ function PoolTabEntity({
               </div>
             );
           }
+<<<<<<< HEAD
           if (dataFields[fieldName]?.length === 0) {
             return null;
           }
@@ -881,6 +1024,9 @@ function PoolTabEntity({
           }
 
           if (fieldName.toUpperCase().includes("REWARD") && !(data[poolKeySingular]?.rewardTokens?.length > 0)) {
+=======
+          if (dataFieldMetrics[fieldName]?.invalidDataPlot || dataFieldMetrics[field]?.invalidDataPlot) {
+>>>>>>> b5219fd (Squashed All)
             return null;
           }
           return (

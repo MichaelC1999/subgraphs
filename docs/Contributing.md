@@ -145,6 +145,7 @@ Examples:
 - "perf(#patch); spookyswap; find value without contract call"
 
 > Notice: some of the names don't have a #`semver` name. This is because they don't actually affect the versioning on any of the subgraphs / dashboard. A good way to know which semver identifer to use is to notice which part of the version you are updating. And it looks like this (MAJOR.MINOR.PATCH)!
+<<<<<<< HEAD
 
 ## Syncing with upstream/master
 
@@ -197,3 +198,5 @@ which git-sync
 > You should see the absolute path of `git-sync` if it worked properly
 
 Restarting your terminal and navigating to your local `subgraphs` project should be enough to make this work. Just call `git sync` from any branch and it should sync up your local and remote project with `messari/subgraphs`
+=======
+>>>>>>> b5219fd (Squashed All)

@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 specVersion: 0.0.5
 repository: https://github.com/messari/subgraphs
 {{#graftEnabled}}
 features:
   - grafting
+=======
+specVersion: 0.0.2
+repository: https://github.com/messari/subgraphs
+{{#graftEnabled}}
+>>>>>>> b5219fd (Squashed All)
 graft:
   base: {{subgraphId}}
   block: {{graftStartBlock}}
@@ -25,6 +31,7 @@ dataSources:
         - DexAmmProtocol
       abis:
         - name: Vault
+<<<<<<< HEAD
           file: ./abis/balancer-v2/Vault.json
         - name: WeightedPool
           file: ./abis/balancer-v2/WeightedPool.json
@@ -36,6 +43,19 @@ dataSources:
           file: ./abis/balancer-v2/ProtocolFeesCollector.json
         - name: ERC20
           file: ./abis/balancer-v2/ERC20.json
+=======
+          file: ./abis/Vault.json
+        - name: WeightedPool
+          file: ./abis/WeightedPool.json
+        - name: Gauge
+          file: ./abis/Gauge.json
+        - name: GaugeController
+          file: ./abis/GaugeController.json
+        - name: FeesCollector
+          file: ./abis/FeesCollector.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+>>>>>>> b5219fd (Squashed All)
 
         ###########################################
         ############## Price Oracle ###############
@@ -80,6 +100,10 @@ dataSources:
           handler: handleSwap
       file: ./src/mappings/vaultMappings.ts
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> b5219fd (Squashed All)
   - kind: ethereum/contract
     name: GaugeController
     network: {{network}}
@@ -95,6 +119,7 @@ dataSources:
         - DexAmmProtocol
       abis:
         - name: GaugeController
+<<<<<<< HEAD
           file: ./abis/balancer-v2/GaugeController.json
         - name: Gauge
           file: ./abis/balancer-v2/Gauge.json
@@ -106,6 +131,19 @@ dataSources:
           file: ./abis/balancer-v2/ProtocolFeesCollector.json
         - name: ERC20
           file: ./abis/balancer-v2/ERC20.json
+=======
+          file: ./abis/GaugeController.json
+        - name: Gauge
+          file: ./abis/Gauge.json
+        - name: Vault
+          file: ./abis/Vault.json
+        - name: WeightedPool
+          file: ./abis/WeightedPool.json
+        - name: FeesCollector
+          file: ./abis/FeesCollector.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+>>>>>>> b5219fd (Squashed All)
 
         ###########################################
         ############## Price Oracle ###############
@@ -142,6 +180,7 @@ dataSources:
       eventHandlers:
         - event: NewGauge(address,int128,uint256)
           handler: handleNewGauge
+<<<<<<< HEAD
         - event: RewardsOnlyGaugeCreated(indexed address,indexed address,address)
           handler: handleRewardsOnlyGaugeCreated
       file: ./src/mappings/GaugeControllerMappings.ts
@@ -153,6 +192,16 @@ dataSources:
       address: "{{balancerTokenAdmin}}"
       abi: BalancerTokenAdmin
       startBlock: {{balancerTokenAdminStartBlock}}
+=======
+      file: ./src/mappings/GaugeControllerMappings.ts
+  - kind: ethereum/contract
+    name: BalancerMinter
+    network: {{network}}
+    source:
+      address: "{{balancerMinterAddress}}"
+      abi: BalancerMinter
+      startBlock: {{balancerMinterStartBlock}}
+>>>>>>> b5219fd (Squashed All)
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -160,6 +209,7 @@ dataSources:
       entities:
         - DexAmmProtocol
       abis:
+<<<<<<< HEAD
         - name: BalancerTokenAdmin
           file: ./abis/balancer-v2/BalancerTokenAdmin.json
       eventHandlers:
@@ -167,6 +217,58 @@ dataSources:
           handler: handleMiningParametersUpdated
       file: ./src/mappings/balancerTokenAdminMappings.ts
 {{/usesBalancerTokenAdmin}} 
+=======
+        - name: BalancerMinter
+          file: ./abis/BalancerMinter.json
+        - name: Vault
+          file: ./abis/Vault.json
+        - name: WeightedPool
+          file: ./abis/WeightedPool.json
+        - name: Gauge
+          file: ./abis/Gauge.json
+        - name: GaugeController
+          file: ./abis/GaugeController.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+
+        ###########################################
+        ############## Price Oracle ###############
+        ###########################################
+        # Curve Contracts
+        - name: CurveRegistry
+          file: ./abis/Prices/Curve/Registry.json
+        - name: CurvePoolRegistry
+          file: ./abis/Prices/Curve/PoolRegistry.json
+        - name: CalculationsCurve
+          file: ./abis/Prices/Calculations/Curve.json
+        # YearnLens Contracts
+        - name: YearnLensContract
+          file: ./abis/Prices/YearnLens.json
+        # ChainLink Contracts
+        - name: ChainLinkContract
+          file: ./abis/Prices/ChainLink.json
+        # Uniswap Contracts
+        - name: UniswapRouter
+          file: ./abis/Prices/Uniswap/Router.json
+        - name: UniswapFactory
+          file: ./abis/Prices/Uniswap/Factory.json
+        - name: UniswapPair
+          file: ./abis/Prices/Uniswap/Pair.json
+        # SushiSwap Contracts
+        - name: SushiSwapRouter
+          file: ./abis/Prices/SushiSwap/Router.json
+        - name: SushiSwapFactory
+          file: ./abis/Prices/SushiSwap/Factory.json
+        - name: SushiSwapPair
+          file: ./abis/Prices/SushiSwap/Pair.json
+        - name: CalculationsSushiSwap
+          file: ./abis/Prices/Calculations/SushiSwap.json
+      eventHandlers:
+        - event: Minted(indexed address,address,uint256)
+          handler: handleMinted
+      file: ./src/mappings/balancerMinterMappings.ts
+
+>>>>>>> b5219fd (Squashed All)
 templates:
   - kind: ethereum/contract
     name: WeightedPool
@@ -182,6 +284,7 @@ templates:
         - LiquidityPoolFee
       abis:
         - name: WeightedPool
+<<<<<<< HEAD
           file: ./abis/balancer-v2/WeightedPool.json
         - name: Vault
           file: ./abis/balancer-v2/Vault.json
@@ -193,6 +296,19 @@ templates:
           file: ./abis/balancer-v2/GaugeController.json
         - name: ERC20
           file: ./abis/balancer-v2/ERC20.json
+=======
+          file: ./abis/WeightedPool.json
+        - name: Vault
+          file: ./abis/Vault.json
+        - name: FeesCollector
+          file: ./abis/FeesCollector.json
+        - name: Gauge
+          file: ./abis/Gauge.json
+        - name: GaugeController
+          file: ./abis/GaugeController.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+>>>>>>> b5219fd (Squashed All)
         
         ###########################################
         ############## Price Oracle ###############
@@ -245,6 +361,7 @@ templates:
         - LiquidityPoolFee
       abis:
         - name: Gauge
+<<<<<<< HEAD
           file: ./abis/balancer-v2/Gauge.json
         - name: GaugeController
           file: ./abis/balancer-v2/GaugeController.json
@@ -256,6 +373,19 @@ templates:
           file: ./abis/balancer-v2/ProtocolFeesCollector.json
         - name: ERC20
           file: ./abis/balancer-v2/ERC20.json
+=======
+          file: ./abis/Gauge.json
+        - name: GaugeController
+          file: ./abis/GaugeController.json
+        - name: Vault
+          file: ./abis/Vault.json
+        - name: WeightedPool
+          file: ./abis/WeightedPool.json
+        - name: FeesCollector
+          file: ./abis/FeesCollector.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+>>>>>>> b5219fd (Squashed All)
         
         ###########################################
         ############## Price Oracle ###############
@@ -290,10 +420,15 @@ templates:
         - name: CalculationsSushiSwap
           file: ./abis/Prices/Calculations/SushiSwap.json
       eventHandlers:
+<<<<<<< HEAD
         - event: Deposit(indexed address,uint256)
           handler: handleDeposit
         - event: Withdraw(indexed address,uint256)
           handler: handleWithdraw
+=======
+        - event: RewardDistributorUpdated(indexed address,address)
+          handler: handleRewardDistributorUpdated
+>>>>>>> b5219fd (Squashed All)
         - event: UpdateLiquidityLimit(indexed address,uint256,uint256,uint256,uint256)
           handler: handleUpdateLiquidityLimit
       file: ./src/mappings/gaugeMappings.ts

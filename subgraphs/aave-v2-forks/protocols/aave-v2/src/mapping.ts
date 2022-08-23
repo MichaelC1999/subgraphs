@@ -37,12 +37,18 @@ import {
   Borrow,
   Deposit,
   LiquidationCall,
+<<<<<<< HEAD
   Paused,
+=======
+>>>>>>> b5219fd (Squashed All)
   Repay,
   ReserveDataUpdated,
   ReserveUsedAsCollateralDisabled,
   ReserveUsedAsCollateralEnabled,
+<<<<<<< HEAD
   Unpaused,
+=======
+>>>>>>> b5219fd (Squashed All)
   Withdraw,
 } from "../../../generated/templates/LendingPool/LendingPool";
 import { AToken } from "../../../generated/templates/LendingPool/AToken";
@@ -54,7 +60,10 @@ import {
   _handleCollateralConfigurationChanged,
   _handleDeposit,
   _handleLiquidate,
+<<<<<<< HEAD
   _handlePaused,
+=======
+>>>>>>> b5219fd (Squashed All)
   _handlePriceOracleUpdated,
   _handleRepay,
   _handleReserveActivated,
@@ -64,7 +73,10 @@ import {
   _handleReserveInitialized,
   _handleReserveUsedAsCollateralDisabled,
   _handleReserveUsedAsCollateralEnabled,
+<<<<<<< HEAD
   _handleUnpaused,
+=======
+>>>>>>> b5219fd (Squashed All)
   _handleWithdraw,
 } from "../../../src/mapping";
 import {
@@ -373,8 +385,12 @@ export function handleReserveUsedAsCollateralEnabled(
   // This Event handler enables a reserve/market to be used as collateral
   _handleReserveUsedAsCollateralEnabled(
     event.params.reserve,
+<<<<<<< HEAD
     event.params.user,
     getProtocolData()
+=======
+    event.params.user
+>>>>>>> b5219fd (Squashed All)
   );
 }
 
@@ -388,6 +404,7 @@ export function handleReserveUsedAsCollateralDisabled(
   );
 }
 
+<<<<<<< HEAD
 export function handlePaused(event: Paused): void {
   _handlePaused(getProtocolData());
 }
@@ -396,6 +413,8 @@ export function handleUnpaused(event: Unpaused): void {
   _handleUnpaused(getProtocolData());
 }
 
+=======
+>>>>>>> b5219fd (Squashed All)
 export function handleDeposit(event: Deposit): void {
   _handleDeposit(
     event,
