@@ -185,6 +185,9 @@ async function executionFlow() {
   await sleep(5000);
   await alertPoolLevelErrors(discordMessages, deployments, "exchanges");
   await sleep(5000);
+
+  deployments = await deploymentsOnPoolLevelTimeseries(deployments);
+
   executionFlow();
 }
 
@@ -192,5 +195,12 @@ async function deploymentsOnPoolLevel(deployments) {
   deployments = await lendingPoolLevel(deployments);
   deployments = await vaultPoolLevel(deployments);
   deployments = await dexPoolLevel(deployments);
+  return deployments;
+}
+
+async function deploymentsOnPoolLevelTimeseries(deployments) {
+  deployments = await lendingPoolLevelTimeseries(deployments);
+  deployments = await vaultPoolLevelTimeseries(deployments);
+  deployments = await dexPoolLevelTimeseries(deployments);
   return deployments;
 }

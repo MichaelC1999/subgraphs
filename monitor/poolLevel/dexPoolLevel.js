@@ -19,16 +19,27 @@ export const dexPoolLevel = async (deployments) => {
             type
             schemaVersion
         }
-      liquidityPools (first: 1000) {
+      liquidityPoolDailySnapshots (first: 100) {
         id
         name
         totalValueLockedUSD
-        cumulativeSupplySideRevenueUSD
-        cumulativeProtocolSideRevenueUSD
-        cumulativeTotalRevenueUSD
-        cumulativeVolumeUSD
-        outputTokenSupply
-        outputTokenPriceUSD
+        dailySupplySideRevenueUSD
+        dailyProtocolSideRevenueUSD
+        dailyTotalRevenueUSD
+        dailyVolumeUSD
+        dailyVolumeByTokenAmount
+        dailyVolumeByTokenUSD
+      }
+      liquidityPoolHourlySnapshots (first: 100) {
+        id
+        name
+        totalValueLockedUSD
+        hourlySupplySideRevenueUSD
+        hourlyProtocolSideRevenueUSD
+        hourlyTotalRevenueUSD
+        hourlyVolumeUSD
+        hourlyVolumeByTokenAmount
+        hourlyVolumeByTokenUSD
       }
     }`;
 
@@ -55,7 +66,8 @@ export const dexPoolLevel = async (deployments) => {
             (response) =>
             (poolLevelData = response.map((poolData) => {
                 return {
-                    liquidityPools: poolData?.data?.data?.liquidityPools || [],
+                    liquidityPoolDailySnapshots: poolData?.data?.data?.liquidityPoolDailySnapshots || [],
+                    liquidityPoolHourlySnapshots: poolData?.data?.data?.liquidityPoolHourlySnapshots || [],
                     url: poolData.config.url,
                     deployment: Object.keys(deployments).find((key) => deployments[key].url === poolData.config.url) || poolData.config.url.split("messari/")[1],
                 };
@@ -64,16 +76,16 @@ export const dexPoolLevel = async (deployments) => {
         .catch((err) => console.log(err));
 
     poolLevelData.forEach((protocol, idx) => {
-        if (!protocol?.liquidityPools) return;
-        const data = protocol.liquidityPools;
+        if (!protocol?.liquidityPoolDailySnapshots) return;
+        let data = protocol.liquidityPoolDailySnapshots;
         if (!data?.length) return;
-        const url = protocol.url;
-        // const dataFields = Object.keys(data)
+        let url = protocol.url;
+        // let dataFields = Object.keys(data)
 
-        const deploymentName = protocol.deployment;
-        const deployment = { ...deployments[deploymentName] };
+        let deploymentName = protocol.deployment;
+        let deployment = { ...deployments[deploymentName] };
 
-        const issuesArrays = { ...deployment.poolErrors };
+        let issuesArrays = { ...deployment.poolErrors };
 
         data.forEach((instance) => {
             const buildIssue = (value) => instance.id;
@@ -107,22 +119,72 @@ export const dexPoolLevel = async (deployments) => {
                 issuesArrays[currentIssueField].push(buildIssue(parseFloat(instance[currentIssueField]).toFixed(2)));
             }
 
-            currentIssueField = "cumulativeTotalRevenueUSD";
+            currentIssueField = "cumulativeVolumeUSD";
+
+            if (!(parseFloat(instance[currentIssueField]) > 100 && parseFloat(instance[currentIssueField]) < 10000000000)) {
+                issuesArrays[currentIssueField].push(buildIssue(parseFloat(instance[currentIssueField])));
+            }
+
+            currentIssueField = "outputTokenSupply";
+            if (!(parseFloat(instance[currentIssueField]) >= 0) && !issuesArrays[currentIssueField]?.includes(instance.id)) {
+                issuesArrays[currentIssueField].push(buildIssue(instance[currentIssueField]));
+            }
+
+            currentIssueField = "outputTokenPriceUSD";
             if (
-                (
-                    parseFloat(instance.cumulativeProtocolSideRevenueUSD) +
-                    parseFloat(instance.cumulativeSupplySideRevenueUSD)
-                ).toFixed(2) !== parseFloat(instance[currentIssueField]).toFixed(2) && !issuesArrays[currentIssueField]?.includes(instance.id)
+                !(
+                    parseFloat(instance[currentIssueField]) >= 0 &&
+                    parseFloat(instance[currentIssueField]) <= 100000
+                ) && !issuesArrays[currentIssueField]?.includes(instance.id)
             ) {
-                const value = ((parseFloat(instance.cumulativeProtocolSideRevenueUSD) +
-                    parseFloat(instance.cumulativeSupplySideRevenueUSD)) +
-                    "||" +
-                    parseFloat(data[currentIssueField]).toFixed(2) +
-                    "=" +
-                    parseFloat(data.cumulativeProtocolSideRevenueUSD).toFixed(2) +
-                    "+" +
-                    parseFloat(data.cumulativeProtocolSideRevenueUSD).toFixed(2))
-                issuesArrays[currentIssueField].push(buildIssue(value));
+                issuesArrays[currentIssueField].push(buildIssue(instance[currentIssueField]));
+            }
+
+        })
+
+        deployments[deploymentName].poolErrors = issuesArrays;
+
+        if (!protocol?.liquidityPoolHourlySnapshots) return;
+        data = protocol.liquidityPoolHourlySnapshots;
+        if (!data?.length) return;
+        url = protocol.url;
+        // dataFields = Object.keys(data)
+
+        deploymentName = protocol.deployment;
+        deployment = { ...deployments[deploymentName] };
+
+        issuesArrays = { ...deployment.poolErrors };
+
+        data.forEach((instance) => {
+            const buildIssue = (value) => instance.id;
+            let currentIssueField = "totalValueLockedUSD";
+            if (
+                !(
+                    parseFloat(instance[currentIssueField]) > 1000 &&
+                    parseFloat(instance[currentIssueField]) < 100000000000
+                ) && !issuesArrays[currentIssueField]?.includes(instance.id)
+            ) {
+                issuesArrays[currentIssueField].push(buildIssue(parseFloat(instance[currentIssueField]).toFixed(2)));
+            }
+
+            currentIssueField = "cumulativeSupplySideRevenueUSD";
+            if (
+                !(
+                    parseFloat(instance[currentIssueField]) >= 100 &&
+                    parseFloat(instance[currentIssueField]) <= 10000000000
+                ) && !issuesArrays[currentIssueField]?.includes(instance.id)
+            ) {
+                issuesArrays[currentIssueField].push(buildIssue(parseFloat(instance[currentIssueField]).toFixed(2)));
+            }
+
+            currentIssueField = "cumulativeProtocolSideRevenueUSD";
+            if (
+                !(
+                    parseFloat(instance[currentIssueField]) >= 100 &&
+                    parseFloat(instance[currentIssueField]) <= 10000000000
+                ) && !issuesArrays[currentIssueField]?.includes(instance.id)
+            ) {
+                issuesArrays[currentIssueField].push(buildIssue(parseFloat(instance[currentIssueField]).toFixed(2)));
             }
 
             currentIssueField = "cumulativeVolumeUSD";

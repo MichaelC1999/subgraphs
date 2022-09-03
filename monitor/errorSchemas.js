@@ -66,3 +66,52 @@ export const errorsObj = {
         outputTokenPriceUSD: [],
     }
 }
+
+export const errorsObjTimeseries = {
+    exchanges: {
+        dailyTotalValueLockedUSD: [],
+        dailySupplySideRevenueUSD: [],
+        dailyProtocolSideRevenueUSD: [],
+        dailyTotalRevenueUSD: [],
+        dailyVolumeUSD: [],
+        dailyVolumeByTokenAmount: [],
+        dailyVolumeByTokenUSD: [],
+        hourlyTotalValueLockedUSD: [],
+        hourlySupplySideRevenueUSD: [],
+        hourlyProtocolSideRevenueUSD: [],
+        hourlyTotalRevenueUSD: [],
+        hourlyVolumeUSD: [],
+        hourlyVolumeByTokenAmount: [],
+        hourlyVolumeByTokenUSD: [],
+    },
+    lending: {
+        dailyTotalValueLockedUSD: [],
+        dailySupplySideRevenueUSD: [],
+        dailyProtocolSideRevenueUSD: [],
+        dailyTotalRevenueUSD: [],
+        dailyDepositUSD: [],
+        dailyBorrowUSD: [],
+        dailyLiquidateUSD: [],
+        dailyWithdrawUSD: [],
+        dailyRepayUSD: [],
+        hourlyTotalValueLockedUSD: [],
+        hourlySupplySideRevenueUSD: [],
+        hourlyProtocolSideRevenueUSD: [],
+        hourlyTotalRevenueUSD: [],
+        hourlyDepositUSD: [],
+        hourlyBorrowUSD: [],
+        hourlyLiquidateUSD: [],
+        hourlyWithdrawUSD: [],
+        hourlyRepayUSD: [],
+    },
+    vaults: {
+        dailyTotalValueLockedUSD: [],
+        dailySupplySideRevenueUSD: [],
+        dailyProtocolSideRevenueUSD: [],
+        dailyTotalRevenueUSD: [],
+        hourlyTotalValueLockedUSD: [],
+        hourlySupplySideRevenueUSD: [],
+        hourlyProtocolSideRevenueUSD: [],
+        hourlyTotalRevenueUSD: [],
+    }
+}
